@@ -1,27 +1,56 @@
-
 <div class="container">
-  <h1>Natalie Rennt bis nach Berlin!</h1>
-  <h2>Unterstütze Sie & laufe mit! Lade ein Bild von deinem Lauf und deiner km-Zahl hoch. </h2>
-  
-  <div class="text-center">
-    <div class="km-left">515 km</div>
-     bis Berlin verbleiben
+  <div class="row">
+    <div class="col">
+      <h1>Natalie Rennt bis nach Berlin!</h1>
+      <h2>
+        Unterstütze Sie & laufe mit! Lade ein Bild von deinem Lauf und deiner
+        km-Zahl hoch.
+      </h2>
+      <div class="text-center">
+        <div class="km-left">515 km</div>
+        bis Berlin verbleiben
+        <mat-progress-bar
+          mode="determinate"
+          [value]="kilometer"
+        ></mat-progress-bar>
+      </div>
+    </div>
   </div>
-  <mat-progress-bar mode="determinate" [value]="kilometer" ></mat-progress-bar>
+  <div class="row my-4">
+    <div class="col text-center">
+      <button mat-fab (click)="addRun()">+</button>
+    </div>
+  </div>
 
-  <mat-form-field>
-    <input matInput placeholder="Input">
-  </mat-form-field>
-
-  <mat-form-field>
-    <textarea matInput placeholder="Textarea"></textarea>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Select">
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-
+  <div *ngFor="let group of runs.controls; index as i">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Name"
+            [formControl]="group.get('name')"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Kilometer"
+            [formControl]="group.get('km')"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Foto"
+            [formControl]="group.get('picture')"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 </div>
