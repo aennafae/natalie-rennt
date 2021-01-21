@@ -1,3 +1,14 @@
 .km-left {
-    font-size: 50px;
+  font-size: 50px;
+}
+
+.run-item {
+  border: 1px solid lightgray;
+  min-height: 300px;
+  &__name {
+    font-size: 20px;
+  }
+  &__km {
+    font-size: 35px;
+  }
 }

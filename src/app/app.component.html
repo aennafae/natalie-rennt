@@ -7,6 +7,7 @@
         km-Zahl hoch.
       </h2>
       <div class="text-center">
+        {{ kilometer }}
         <div class="km-left">515 km</div>
         bis Berlin verbleiben
         <mat-progress-bar
@@ -18,38 +19,14 @@
   </div>
   <div class="row my-4">
     <div class="col text-center">
-      <button mat-fab (click)="addRun()">+</button>
+      <button mat-fab (click)="openDialog()">+</button>
     </div>
   </div>
-
-  <div *ngFor="let group of runs.controls; index as i">
-    <div class="row">
-      <div class="col">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Name"
-            [formControl]="group.get('name')"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Kilometer"
-            [formControl]="group.get('km')"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Foto"
-            [formControl]="group.get('picture')"
-          />
-        </mat-form-field>
+  <div class="row px-3" *ngIf="runs">
+    <div class="col-3 p-0" *ngFor="let run of runs">
+      <div class="run-item d-flex align-items-end justify-content-between p-2">
+        <span class="run-item__name">{{ run.name }}</span>
+        <span class="run-item__km">{{ run.km }} km</span>
       </div>
     </div>
   </div>
