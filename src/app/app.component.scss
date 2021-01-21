@@ -2,13 +2,33 @@
   font-size: 50px;
 }
 
+.km-current {
+  font-size: 50px;
+}
+
+.dialog-button {
+  font-size: 40px;
+}
+
 .run-item {
   border: 1px solid lightgray;
-  min-height: 300px;
+  min-height: 150px;
   &__name {
     font-size: 20px;
   }
   &__km {
     font-size: 35px;
+  }
+}
+
+::ng-deep {
+  .run-progressbar.mat-progress-bar {
+    height: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .run-item {
+    min-height: 300px;
   }
 }

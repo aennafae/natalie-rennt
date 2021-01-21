@@ -13,7 +13,13 @@ import { RunService } from './services/run.service';
 })
 export class AppComponent implements OnInit {
   title = 'natalie-rennt';
+
   kilometer: number = 0;
+
+  progressbarValue: number = 0;
+
+  kilometerMax: number = 515;
+
   runs: Run[] = [];
 
   constructor(public dialog: MatDialog, private runService: RunService) {}
@@ -39,11 +45,23 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds all km from runs.
+   * Calculates Progressbar value to display. Progress value is 100% for 515km.
+   * @param runs
+   */
   private calculateKilometer(runs: Run[]) {
+    this.kilometer = 0;
     for (const run of runs) {
       if (run.km) {
         this.kilometer += run.km;
       }
+    }
+
+    if (this.kilometer >= this.kilometerMax) {
+      this.progressbarValue = 100;
+    } else {
+      this.progressbarValue = (this.kilometer * 100) / this.kilometerMax;
     }
   }
 }

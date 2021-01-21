@@ -6,24 +6,36 @@
         Unterstütze Sie & laufe mit! Lade ein Bild von deinem Lauf und deiner
         km-Zahl hoch.
       </h2>
-      <div class="text-center">
-        {{ kilometer }}
-        <div class="km-left">515 km</div>
-        bis Berlin verbleiben
-        <mat-progress-bar
-          mode="determinate"
-          [value]="kilometer"
-        ></mat-progress-bar>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="km-current">{{ kilometer }} km</div>
+        <div class="km-left">{{ kilometerMax }} km</div>
+      </div>
+
+      <mat-progress-bar
+        mode="determinate"
+        [value]="progressbarValue"
+        class="run-progressbar"
+      ></mat-progress-bar>
+      <div class="d-flex justify-content-end mt-3">
+        <div>100 Tage verbleiben</div>
       </div>
     </div>
   </div>
   <div class="row my-4">
     <div class="col text-center">
-      <button mat-fab (click)="openDialog()">+</button>
+      <button
+        mat-fab
+        class="dialog-button"
+        (click)="openDialog()"
+        title="Lade deinen Lauf hoch"
+      >
+        +
+      </button>
     </div>
   </div>
   <div class="row px-3" *ngIf="runs">
-    <div class="col-3 p-0" *ngFor="let run of runs">
+    <div class="col-6 col-md-3 p-0" *ngFor="let run of runs">
       <div class="run-item d-flex align-items-end justify-content-between p-2">
         <span class="run-item__name">{{ run.name }}</span>
         <span class="run-item__km">{{ run.km }} km</span>

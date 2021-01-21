@@ -27,12 +27,29 @@ export class DialogComponent {
   }
 
   saveRun(): void {
-    const newRun: Run = {
-      name: this.run.controls.name.value,
-      km: parseInt(this.run.controls.km.value),
-    };
-    this.runService.addRun(newRun).subscribe((data) => {
-      this.dialogRef.close();
-    });
+    if (this.validateForm()) {
+      const newRun: Run = {
+        name: this.run.controls.name.value,
+        km: parseInt(this.run.controls.km.value),
+      };
+      this.runService.addRun(newRun).subscribe((data) => {
+        this.dialogRef.close();
+      });
+    } else {
+    }
+  }
+
+  private validateForm(): boolean {
+    let isValid = false;
+    for (const controlKey of Object.keys(this.run.controls)) {
+      const formObj = this.run.controls[controlKey];
+      if (formObj.invalid) {
+        isValid = false;
+        formObj.markAsTouched();
+      } else {
+        isValid = true;
+      }
+    }
+    return isValid;
   }
 }

@@ -2,19 +2,39 @@
   <form [formGroup]="run">
     <mat-form-field class="w-100">
       <input matInput placeholder="Dein Name" formControlName="name" />
+      <mat-error *ngIf="run.controls.name.invalid && run.controls.name.touched"
+        >Gib deinen Namen an</mat-error
+      >
     </mat-form-field>
     <mat-form-field class="w-100">
-      <input matInput placeholder="Kilometer" formControlName="km" />
+      <input
+        matInput
+        placeholder="Kilometer"
+        type="number"
+        max="42"
+        formControlName="km"
+      />
+      <mat-error *ngIf="run.controls.km.invalid && run.controls.km.touched"
+        >Gib deine KM-Anzahl an</mat-error
+      >
     </mat-form-field>
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Foto" formControlName="picture" />
-    </mat-form-field>
+    <div class="w-100">
+      <input
+        type="file"
+        #fileInput
+        (change)="uploadFileEvt($event)"
+        name="uploadFile"
+        multiple="false"
+        accept="image/*"
+        formControlName="picture"
+      />
+    </div>
   </form>
 </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-button color="primary" (click)="saveRun()" cdkFocusInitial>
+<div mat-dialog-actions class="d-flex justify-content-between">
+  <button mat-raised-button (click)="onNoClick()">Abbrechen</button>
+  <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
     Ok
   </button>
 </div>
