@@ -36,7 +36,10 @@
   </div>
   <div class="row px-3" *ngIf="runs">
     <div class="col-6 col-md-3 p-0" *ngFor="let run of runs">
-      <div class="run-item d-flex align-items-end justify-content-between p-2">
+      <div
+        class="run-item d-flex align-items-end justify-content-between p-2"
+        [style.background-image]="'url(' + run.picture + ')'"
+      >
         <span class="run-item__name">{{ run.name }}</span>
         <span class="run-item__km">{{ run.km }} km</span>
       </div>

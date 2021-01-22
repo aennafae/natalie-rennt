@@ -13,6 +13,8 @@
 .run-item {
   border: 1px solid lightgray;
   min-height: 150px;
+  background-size: cover;
+
   &__name {
     font-size: 20px;
   }

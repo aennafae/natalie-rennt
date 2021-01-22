@@ -21,8 +21,9 @@
     <div class="w-100">
       <input
         type="file"
-        #fileInput
-        (change)="uploadFileEvt($event)"
+        #pictureInput
+        id="uploadFile"
+        (change)="uploadImage($event)"
         name="uploadFile"
         multiple="false"
         accept="image/*"
