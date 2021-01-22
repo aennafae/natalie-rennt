@@ -35,14 +35,16 @@
     </div>
   </div>
   <div class="row px-3" *ngIf="runs">
-    <div class="col-6 col-md-3 p-0" *ngFor="let run of runs">
-      <div
-        class="run-item d-flex align-items-end justify-content-between p-2"
+    <div class="col-xs-6 col-sm-4" *ngFor="let run of runs">
+      <mat-card
+        class="run-item mb-3 d-flex align-items-end"
         [style.background-image]="'url(' + run.picture + ')'"
       >
-        <span class="run-item__name">{{ run.name }}</span>
-        <span class="run-item__km">{{ run.km }} km</span>
-      </div>
+        <mat-card-content class="justify-content-between d-flex w-100">
+          <span class="run-item__name">{{ run.name }}</span>
+          <span class="run-item__km">{{ run.km }} km</span>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

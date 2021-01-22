@@ -1,3 +1,17 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
 .km-left {
   font-size: 50px;
 }
@@ -8,12 +22,14 @@
 
 .dialog-button {
   font-size: 40px;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  animation: pulse 2s infinite;
 }
 
 .run-item {
-  border: 1px solid lightgray;
   min-height: 150px;
   background-size: cover;
+  color: white;
 
   &__name {
     font-size: 20px;

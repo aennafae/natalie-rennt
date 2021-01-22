@@ -16,9 +16,13 @@ export class DialogComponent {
   });
 
   @ViewChild('pictureInput') pictureInput: ElementRef | undefined;
-  fileAttr = 'Choose File';
 
-  imageBasepath = '';
+  pictureName = '';
+  pictureBasepath = '';
+  previewPicture = '';
+
+  pictureWidth = 450;
+  pictureHeight = 700;
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
@@ -35,7 +39,7 @@ export class DialogComponent {
       const newRun: Run = {
         name: this.run.controls.name.value,
         km: parseInt(this.run.controls.km.value),
-        picture: this.imageBasepath,
+        picture: this.pictureBasepath,
       };
       this.runService.addRun(newRun).subscribe((data) => {
         this.dialogRef.close();
@@ -53,15 +57,29 @@ export class DialogComponent {
         formObj.markAsTouched();
       }
     }
+
+    if (!this.pictureBasepath) {
+      isValid = false;
+    }
+
     return isValid;
   }
 
   uploadImage(imgFile: any) {
     if (imgFile.target.files && imgFile.target.files[0]) {
-      this.fileAttr = '';
+      this.pictureName = '';
       Array.from(imgFile.target.files).forEach((file) => {
-        this.fileAttr += (file as File).name + ' - ';
+        this.pictureName += (file as File).name;
       });
+
+      // Resize image first
+      // create an off-screen canvas
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // set its dimension to target size
+      canvas.width = this.pictureWidth;
+      canvas.height = this.pictureHeight;
 
       // HTML5 FileReader API
       let reader = new FileReader();
@@ -69,17 +87,16 @@ export class DialogComponent {
         let image = new Image();
         image.src = e.target.result;
         image.onload = (rs) => {
-          this.imageBasepath = e.target.result;
+          // draw source image into the off-screen canvas:
+          if (ctx)
+            ctx.drawImage(image, 0, 0, this.pictureWidth, this.pictureHeight);
+          // encode image to data-uri with base64 version of compressed image
+          this.pictureBasepath = canvas.toDataURL();
         };
       };
       reader.readAsDataURL(imgFile.target.files[0]);
-
-      // Reset if duplicate image uploaded again
-      /*  if (this.pictureInput) {
-        this.pictureInput.nativeElement.value = '';
-      } */
     } else {
-      this.fileAttr = 'Choose File';
+      this.pictureName = '';
     }
   }
 }

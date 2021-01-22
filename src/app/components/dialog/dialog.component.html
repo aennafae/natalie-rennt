@@ -1,7 +1,12 @@
 <div mat-dialog-content>
   <form [formGroup]="run">
     <mat-form-field class="w-100">
-      <input matInput placeholder="Dein Name" formControlName="name" />
+      <input
+        matInput
+        placeholder="Dein Name"
+        formControlName="name"
+        maxlength="50"
+      />
       <mat-error *ngIf="run.controls.name.invalid && run.controls.name.touched"
         >Gib deinen Namen an</mat-error
       >
@@ -18,7 +23,7 @@
         >Gib deine KM-Anzahl an</mat-error
       >
     </mat-form-field>
-    <div class="w-100">
+    <div class="w-100 my-3">
       <input
         type="file"
         #pictureInput
@@ -27,13 +32,31 @@
         name="uploadFile"
         multiple="false"
         accept="image/*"
-        formControlName="picture"
+        hidden
       />
+
+      <button mat-raised-button (click)="pictureInput.click()" class="mr-3">
+        Bild hochladen
+      </button>
+      {{ pictureName }}
+
+      <mat-error
+        class="mat-small"
+        *ngIf="!pictureBasepath && run.controls.km.touched"
+        >Lade ein Bild hoch</mat-error
+      >
     </div>
   </form>
+
+  <img
+    *ngIf="pictureBasepath"
+    [src]="pictureBasepath"
+    width="450px"
+    height="700px"
+  />
 </div>
 
-<div mat-dialog-actions class="d-flex justify-content-between">
+<div mat-dialog-actions class="d-flex justify-content-between mt-3">
   <button mat-raised-button (click)="onNoClick()">Abbrechen</button>
   <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
     Ok

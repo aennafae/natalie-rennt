@@ -14,6 +14,7 @@ import {
   MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MatButtonModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatCardModule,
   ],
   providers: [
     {
