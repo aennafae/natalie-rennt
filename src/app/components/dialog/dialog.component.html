@@ -2,6 +2,7 @@
   <form [formGroup]="run">
     <mat-form-field class="w-100">
       <input
+        id="name"
         matInput
         placeholder="Dein Name"
         formControlName="name"
@@ -13,6 +14,7 @@
     </mat-form-field>
     <mat-form-field class="w-100">
       <input
+        id="kilometer"
         matInput
         placeholder="Kilometer"
         type="number"
@@ -49,6 +51,7 @@
   </form>
 
   <img
+    id="picture"
     *ngIf="pictureBasepath"
     [src]="pictureBasepath"
     width="450px"
@@ -57,8 +60,8 @@
 </div>
 
 <div mat-dialog-actions class="d-flex justify-content-between mt-3">
-  <button mat-raised-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
+  <button id="cancel-button" mat-raised-button (click)="onNoClick()">Abbrechen</button>
+  <button id="save-button" mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
     Ok
   </button>
 </div>
