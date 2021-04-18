@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,10 +18,15 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS,
 } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+registerLocaleData(localeDe, localeDeExtra);
 
 @NgModule({
   declarations: [AppComponent, DialogComponent],
@@ -34,8 +42,12 @@ import { DialogComponent } from './components/dialog/dialog.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'de' },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { float: 'always' },
@@ -48,4 +60,4 @@ import { DialogComponent } from './components/dialog/dialog.component';
   entryComponents: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

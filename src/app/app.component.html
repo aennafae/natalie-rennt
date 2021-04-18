@@ -28,21 +28,36 @@
         mat-fab
         class="dialog-button"
         (click)="openDialog()"
-        title="Lade deinen Lauf hoch"
-      >
-        +
+        title="Lade deinen Lauf hoch">+
       </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <img src="./assets/deutschlandkarte.png" />
     </div>
   </div>
   <div class="row px-3" *ngIf="runs">
     <div class="col-xs-6 col-sm-4" *ngFor="let run of runs">
-      <mat-card [attr.data-id]="run.id"
+     <!--  <mat-card [attr.data-id]="run.id"
         class="run-item mb-3 d-flex align-items-end"
-        [style.background-image]="'url(' + run.picture + ')'"
-      >
+        [style.background-image]="'url(' + run.picture + ')'">
         <mat-card-content class="justify-content-between d-flex w-100">
           <span class="run-item__name">{{ run.name }}</span>
           <span class="run-item__km">{{ run.km }} km</span>
+        </mat-card-content>
+      </mat-card> -->
+      <mat-card class="run-item mb-3 d-flex align-items-end">
+        <mat-card-content class="justify-content-between d-flex flex-column w-100">
+          <div class="run-item__name">
+            {{ run.vorname }}
+            {{ run.name }}
+          </div>
+        
+          <span class="run-item__datum">{{ run.datum | date}}</span>
+          <span class="run-item__km">{{ run.km }} km</span>
+          <span class="run-item__km">{{ run.ort }}</span>
         </mat-card-content>
       </mat-card>
     </div>
