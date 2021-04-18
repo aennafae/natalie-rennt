@@ -1,29 +1,91 @@
 <div mat-dialog-content>
   <form [formGroup]="run">
-    <mat-form-field class="w-100">
-      <input
-        matInput
-        placeholder="Dein Name"
-        formControlName="name"
-        maxlength="50"
-      />
-      <mat-error *ngIf="run.controls.name.invalid && run.controls.name.touched"
-        >Gib deinen Namen an</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field class="w-100">
-      <input
-        matInput
-        placeholder="Kilometer"
-        type="number"
-        max="42"
-        formControlName="km"
-      />
-      <mat-error *ngIf="run.controls.km.invalid && run.controls.km.touched"
-        >Gib deine KM-Anzahl an</mat-error
-      >
-    </mat-form-field>
-    <div class="w-100 my-3">
+    <div class="row mb-3">
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            placeholder="Name"
+            formControlName="name"
+            maxlength="50" required/>
+          <mat-error *ngIf="!run.controls.name.value &&
+            run.controls.name.invalid &&
+            run.controls.name.touched">Gib deinen Namen an</mat-error>
+          <mat-error *ngIf="run.controls.name.value.length == 10">Maximal 50
+            Zeichen zulässig</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            placeholder="Vorname"
+            formControlName="vorname"
+            maxlength="50" required/>
+          <mat-error
+            *ngIf="!run.controls.name.value &&
+            run.controls.name.invalid &&
+            run.controls.name.touched">Gib deinen Vornamen an</mat-error>
+          <mat-error *ngIf="run.controls.name.value.length == 10">Maximal 50
+            Zeichen zulässig</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <mat-label>Datum</mat-label>
+          <input formControlName="datum" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="maxDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>Datum nicht korrekt</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <input matInput
+            placeholder="Kilometer"
+            type="number"
+            max="42"
+            min="1"
+            formControlName="km"
+            required />
+          <mat-error *ngIf="!run.controls.km.value &&
+            run.controls.km.invalid &&
+            run.controls.km.touched">Gib deine KM-Anzahl an</mat-error>
+          <mat-error *ngIf="(run.controls.km.invalid && run.controls.km.errors?.max)
+            ||
+            run.controls.km.errors?.min">Gib eine zulässige KM-Anzahl, max. 42km an</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            placeholder="Laufort"
+            formControlName="ort"
+            maxlength="100"/>
+            </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            placeholder="E-Mail"
+            formControlName="email"
+            maxlength="50"/>
+            </mat-form-field>
+      </div>
+    </div>
+
+    <!-- <div class="w-100 my-3">
       <input
         type="file"
         #pictureInput
@@ -44,21 +106,18 @@
         class="mat-small"
         *ngIf="!pictureBasepath && run.controls.km.touched"
         >Lade ein Bild hoch</mat-error
-      >
-    </div>
+      > 
+    </div>-->
+    <mat-checkbox formControlName="werbung" class="mb-3">Ich bin damit einverstanden</mat-checkbox>
   </form>
 
-  <img
-    *ngIf="pictureBasepath"
-    [src]="pictureBasepath"
-    width="450px"
-    height="700px"
-  />
+ <p class="mat-small">* Pflichtfeld</p>
+  <!-- <img *ngIf="pictureBasepath" [src]="pictureBasepath" width="200" /> -->
 </div>
 
 <div mat-dialog-actions class="d-flex justify-content-between mt-3">
   <button mat-raised-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
+  <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial class="w-50">
     Ok
   </button>
 </div>

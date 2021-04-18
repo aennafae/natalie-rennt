@@ -27,10 +27,6 @@
 }
 
 .run-item {
-  min-height: 150px;
-  background-size: cover;
-  color: white;
-
   &__name {
     font-size: 20px;
   }
@@ -47,6 +43,5 @@
 
 @media (min-width: 768px) {
   .run-item {
-    min-height: 300px;
   }
 }

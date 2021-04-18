@@ -12,7 +12,16 @@ import { RunService } from '../../services/run.service';
 export class DialogComponent {
   run = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    km: new FormControl('', [Validators.required]),
+    vorname: new FormControl('', [Validators.required]),
+    datum: new FormControl('', [Validators.required]),
+    km: new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(42),
+    ]),
+    ort: new FormControl(''),
+    werbung: new FormControl({ disabled: false, value: false }),
+    email: new FormControl('', [Validators.email]),
   });
 
   @ViewChild('pictureInput') pictureInput: ElementRef | undefined;
@@ -24,11 +33,17 @@ export class DialogComponent {
   pictureWidth = 450;
   pictureHeight = 700;
 
+  maxDate = new Date();
+  minDate = new Date(); // 7 Tage zurück in die Vergangenheit von heute aus
+
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private runService: RunService
-  ) {}
+  ) {
+    this.minDate.setDate(this.maxDate.getDate() - 7);
+    this.run.controls.datum.setValue(this.maxDate);
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -38,8 +53,13 @@ export class DialogComponent {
     if (this.validateForm()) {
       const newRun: Run = {
         name: this.run.controls.name.value,
+        vorname: this.run.controls.vorname.value,
+        datum: this.run.controls.datum.value,
         km: parseInt(this.run.controls.km.value),
-        picture: this.pictureBasepath,
+        ort: this.run.controls.ort.value,
+        email: this.run.controls.email.value,
+        werbung: this.run.controls.werbung.value,
+        //picture: this.pictureBasepath,
       };
       this.runService.addRun(newRun).subscribe((data) => {
         this.dialogRef.close();
@@ -49,7 +69,11 @@ export class DialogComponent {
   }
 
   private validateForm(): boolean {
+    debugger;
     let isValid = true;
+    this.run.controls.name.setValue(this.run.controls.name.value.trim());
+    this.run.controls.name.updateValueAndValidity();
+
     for (const controlKey of Object.keys(this.run.controls)) {
       const formObj = this.run.controls[controlKey];
       if (formObj.invalid) {
@@ -58,9 +82,9 @@ export class DialogComponent {
       }
     }
 
-    if (!this.pictureBasepath) {
-      isValid = false;
-    }
+    // if (!this.pictureBasepath) {
+    //   isValid = false;
+    // }
 
     return isValid;
   }

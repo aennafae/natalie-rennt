@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
