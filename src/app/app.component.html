@@ -24,7 +24,7 @@
   </div>
   <div class="row my-4">
     <div class="col text-center">
-      <button
+      <button id="add-card-button"
         mat-fab
         class="dialog-button"
         (click)="openDialog()"
@@ -36,7 +36,7 @@
   </div>
   <div class="row px-3" *ngIf="runs">
     <div class="col-xs-6 col-sm-4" *ngFor="let run of runs">
-      <mat-card
+      <mat-card [attr.data-id]="run.id"
         class="run-item mb-3 d-flex align-items-end"
         [style.background-image]="'url(' + run.picture + ')'"
       >
