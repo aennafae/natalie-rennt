@@ -5,6 +5,7 @@
         <mat-form-field class="w-100">
           <input
             matInput
+            id="name"
             placeholder="Name"
             formControlName="name"
             maxlength="50" required/>
@@ -19,6 +20,7 @@
         <mat-form-field class="w-100">
           <input
             matInput
+            id="vorname"
             placeholder="Vorname"
             formControlName="vorname"
             maxlength="50" required/>
@@ -36,7 +38,8 @@
       <div class="col-6">
         <mat-form-field class="w-100">
           <mat-label>Datum</mat-label>
-          <input formControlName="datum" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="maxDate" required>
+          <input id="datum"
+          formControlName="datum" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="maxDate" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error>Datum nicht korrekt</mat-error>
@@ -45,6 +48,7 @@
       <div class="col-6">
         <mat-form-field class="w-100">
           <input matInput
+            id="kilometer"
             placeholder="Kilometer"
             type="number"
             max="42"
@@ -66,6 +70,7 @@
         <mat-form-field class="w-100">
           <input
             matInput
+            id="ort"
             placeholder="Laufort"
             formControlName="ort"
             maxlength="100"/>
@@ -78,6 +83,7 @@
         <mat-form-field class="w-100">
           <input
             matInput
+            id="email"
             placeholder="E-Mail"
             formControlName="email"
             maxlength="50"/>
@@ -116,8 +122,8 @@
 </div>
 
 <div mat-dialog-actions class="d-flex justify-content-between mt-3">
-  <button mat-raised-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial class="w-50">
+  <button id="cancel-button" mat-raised-button (click)="onNoClick()">Abbrechen</button>
+  <button id="save-button" mat-raised-button color="primary" (click)="saveRun()" cdkFocusInitial>
     Ok
   </button>
 </div>
