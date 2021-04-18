@@ -21,8 +21,11 @@ export class AppComponent implements OnInit {
   kilometerMax: number = 515;
 
   runs: Run[] = [];
+  runsLeft: Run[] = [];
+  runsRight: Run[] = [];
+  runsBottom: Run[] = [];
 
-  constructor(public dialog: MatDialog, private runService: RunService) {}
+  constructor(public dialog: MatDialog, private runService: RunService) { }
 
   ngOnInit() {
     this.getData();
@@ -41,6 +44,15 @@ export class AppComponent implements OnInit {
   private getData(): void {
     this.runService.getRuns().subscribe((data) => {
       this.runs = data.reverse();
+      this.runsLeft = this.runs.slice(0, 3).map(i => {
+        return i;
+      });
+      this.runsRight = this.runs.slice(3, 6).map(i => {
+        return i;
+      });
+      this.runsBottom = this.runs.slice(6, this.runs.length).map(i => {
+        return i;
+      });
       this.calculateKilometer(data);
     });
   }

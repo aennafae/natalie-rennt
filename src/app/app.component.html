@@ -34,32 +34,35 @@
   </div>
 
   <div class="row">
-    <div class="col text-center">
-      <img src="./assets/deutschlandkarte.png" />
+    <div class="col-3" *ngIf="runs">
+      <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
     </div>
-  </div>
-  <div class="row px-3" *ngIf="runs">
-    <div class="col-xs-6 col-sm-4" *ngFor="let run of runs">
-     <!--  <mat-card [attr.data-id]="run.id"
-        class="run-item mb-3 d-flex align-items-end"
-        [style.background-image]="'url(' + run.picture + ')'">
-        <mat-card-content class="justify-content-between d-flex w-100">
-          <span class="run-item__name">{{ run.name }}</span>
-          <span class="run-item__km">{{ run.km }} km</span>
-        </mat-card-content>
-      </mat-card> -->
-      <mat-card class="run-item mb-3 d-flex align-items-end">
-        <mat-card-content class="justify-content-between d-flex flex-column w-100">
-          <div class="run-item__name">
-            {{ run.vorname }}
-            {{ run.name }}
-          </div>
-        
-          <span class="run-item__datum">{{ run.datum | date}}</span>
-          <span class="run-item__km">{{ run.km }} km</span>
-          <span class="run-item__km">{{ run.ort }}</span>
-        </mat-card-content>
-      </mat-card>
+
+    <div class="col-6 text-center">
+      <img src="./assets/deutschlandkarte.png"  class="map-image"/>
+    </div>
+
+    <div class="col-3" *ngIf="runs">
+      <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsRight}"></ng-container> 
+    </div>
+
+    <div class="col-12" *ngIf="runs">
+      <div class="d-flex">
+        <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #runItem let-runsx="runsx">
+  <div class="run-item my-2 mx-2 p-2" *ngFor="let run of runsx">
+    <div class="run-item__name">
+      {{ run.vorname }}
+      {{ run.name }}
+    </div>
+
+    <div class="run-item__datum">{{ run.datum | date}}</div>
+    <div class="run-item__km">{{ run.km }} km</div>
+    <div class="run-item__km">{{ run.ort }}</div>
+  </div>
+</ng-template>
