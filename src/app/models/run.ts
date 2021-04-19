@@ -1,5 +1,5 @@
 export class Run {
-  id?: number;
+  key?: string | null;
   name?: string;
   vorname?: string;
   datum?: string | null;
@@ -8,4 +8,5 @@ export class Run {
   ort?: string;
   werbung?: boolean;
   email?: string;
+  timestamp?: number | null;
 }

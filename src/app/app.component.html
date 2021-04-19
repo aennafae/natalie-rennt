@@ -50,7 +50,14 @@
       <div class="d-flex flex-wrap">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
       </div>
-    </div>
+
+      <button id="load-more-runs-button"
+      mat-fab
+      class="dialog-button"
+      (click)="loadMoreRuns()"
+      title="Lade mehr">Mehr laden
+    </button>
+      </div>
   </div>
 </div>
 
