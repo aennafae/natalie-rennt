@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Run } from '../models/models';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -8,17 +9,29 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 export class RunService {
   private dbPath = '/runs';
 
-  runs: AngularFirestoreCollection<Run>;
+  runs: AngularFireList<Run>;
 
-  constructor(private db: AngularFirestore) {
-    this.runs = db.collection(this.dbPath);
+  constructor(private db: AngularFireDatabase) {
+    this.runs = this.db.list(this.dbPath);
   }
 
-  addRun(run: Run): void {
-    this.runs.add({...run});
+  addRun(run: Run): any {
+    return this.runs.push(run);
   }
 
-  getRuns(): AngularFirestoreCollection<Run> {
+  getRuns(): AngularFireList<Run> {
     return this.runs;
+  }
+
+  deleteAllRuns(): Promise<void> {
+    return this.runs.remove();
+  }
+
+  updateRun(key: string, value: any): Promise<void> {
+    return this.runs.update(key, value);
+  }
+
+  deleteRun(key: string): Promise<void> {
+    return this.runs.remove(key);
   }
 }

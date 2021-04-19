@@ -3,6 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
+    "site": "natrennt",
     "public": "dist/natalie-rennt",
     "ignore": [
       "firebase.json",

@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
   runsRight: Run[] = [];
   runsBottom: Run[] = [];
 
+
+  run: Run = new Run();
+
   constructor(public dialog: MatDialog, private runService: RunService) { }
 
   ngOnInit() {
@@ -43,16 +46,15 @@ export class AppComponent implements OnInit {
   }
 
   private getData(): void {
-      this.runService.getRuns().snapshotChanges().pipe(
-        map(changes =>
-          changes.map(c =>
-            ({ key: c.payload.doc.id, ...c.payload.doc.data() })
-          )
+    this.runService.getRuns().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
         )
-      ).subscribe(runs => {
-        debugger;
-        this.runs = runs.reverse();
-      });
+      )
+    ).subscribe(runs => {
+      debugger;
+      this.runs = runs.reverse();
 
       this.runsLeft = this.runs.slice(0, 3).map(i => {
         return i;
@@ -63,7 +65,9 @@ export class AppComponent implements OnInit {
       this.runsBottom = this.runs.slice(6, this.runs.length).map(i => {
         return i;
       });
-     // this.calculateKilometer(data);
+    });
+
+    // this.calculateKilometer(data);
   }
 
   /**

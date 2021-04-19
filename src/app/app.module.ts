@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -51,9 +51,10 @@ registerLocaleData(localeDe, localeDeExtra);
     MatNativeDateModule,
     MatCheckboxModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'natalie-rennt'),
-    AngularFirestoreModule
+    AngularFireDatabaseModule
   ],
   providers: [
+    DatePipe,
     { provide: LOCALE_ID, useValue: 'de' },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,

@@ -2,7 +2,7 @@ export class Run {
   id?: number;
   name?: string;
   vorname?: string;
-  datum?: Date;
+  datum?: string | null;
   km?: number;
   picture?: string;
   ort?: string;
