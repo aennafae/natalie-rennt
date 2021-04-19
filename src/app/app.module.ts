@@ -26,6 +26,11 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 registerLocaleData(localeDe, localeDeExtra);
 
 @NgModule({
@@ -44,7 +49,9 @@ registerLocaleData(localeDe, localeDeExtra);
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'natalie-rennt'),
+    AngularFirestoreModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'de' },

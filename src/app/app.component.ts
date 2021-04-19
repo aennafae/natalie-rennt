@@ -1,4 +1,5 @@
 import { state, trigger } from '@angular/animations';
+import { map } from 'rxjs/operators';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,8 +43,17 @@ export class AppComponent implements OnInit {
   }
 
   private getData(): void {
-    this.runService.getRuns().subscribe((data) => {
-      this.runs = data.reverse();
+      this.runService.getRuns().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.doc.id, ...c.payload.doc.data() })
+          )
+        )
+      ).subscribe(runs => {
+        debugger;
+        this.runs = runs.reverse();
+      });
+
       this.runsLeft = this.runs.slice(0, 3).map(i => {
         return i;
       });
@@ -53,8 +63,7 @@ export class AppComponent implements OnInit {
       this.runsBottom = this.runs.slice(6, this.runs.length).map(i => {
         return i;
       });
-      this.calculateKilometer(data);
-    });
+     // this.calculateKilometer(data);
   }
 
   /**

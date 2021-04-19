@@ -25,7 +25,7 @@ export class DialogComponent {
   });
 
   @ViewChild('pictureInput') pictureInput: ElementRef | undefined;
-
+  
   pictureName = '';
   pictureBasepath = '';
   previewPicture = '';
@@ -51,19 +51,18 @@ export class DialogComponent {
 
   saveRun(): void {
     if (this.validateForm()) {
-      const newRun: Run = {
-        name: this.run.controls.name.value,
-        vorname: this.run.controls.vorname.value,
-        datum: this.run.controls.datum.value,
-        km: parseInt(this.run.controls.km.value),
-        ort: this.run.controls.ort.value,
-        email: this.run.controls.email.value,
-        werbung: this.run.controls.werbung.value,
+      const newRun = new Run();
+      
+      newRun.name =  this.run.controls.name.value,
+      newRun.vorname= this.run.controls.vorname.value,
+      newRun.datum= this.run.controls.datum.value,
+      newRun.km =parseInt(this.run.controls.km.value),
+      newRun.ort=this.run.controls.ort.value,
+      newRun.email= this.run.controls.email.value,
+      newRun.werbung= this.run.controls.werbung.value,
         //picture: this.pictureBasepath,
-      };
-      this.runService.addRun(newRun).subscribe((data) => {
-        this.dialogRef.close();
-      });
+      this.runService.addRun(newRun);
+      this.dialogRef.close();
     } else {
     }
   }

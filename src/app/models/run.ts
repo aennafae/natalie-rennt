@@ -1,4 +1,4 @@
-export interface Run {
+export class Run {
   id?: number;
   name?: string;
   vorname?: string;

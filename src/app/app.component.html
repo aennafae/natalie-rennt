@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-flex">
   <div class="row">
     <div class="col">
       <h1>Natalie Rennt bis nach Berlin!</h1>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="col-12" *ngIf="runs">
-      <div class="d-flex">
+      <div class="d-flex flex-wrap">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
       </div>
     </div>

@@ -1,22 +1,24 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Run } from '../models/models';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RunService {
-  constructor(private http: HttpClient) {}
+  private dbPath = '/runs';
 
-  addRun(run: Run): Observable<Run> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<Run>('http://localhost:3000/runs', run, {
-      headers: headers,
-    });
+  runs: AngularFirestoreCollection<Run>;
+
+  constructor(private db: AngularFirestore) {
+    this.runs = db.collection(this.dbPath);
   }
 
-  getRuns(): Observable<Run[]> {
-    return this.http.get<Run[]>('http://localhost:3000/runs');
+  addRun(run: Run): void {
+    this.runs.add({...run});
+  }
+
+  getRuns(): AngularFirestoreCollection<Run> {
+    return this.runs;
   }
 }
