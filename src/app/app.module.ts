@@ -28,7 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.firebase';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 registerLocaleData(localeDe, localeDeExtra);

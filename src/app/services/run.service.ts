@@ -9,17 +9,19 @@ export class RunService {
   private dbPath = '/runs';
 
   runs: AngularFireList<Run>;
-  currentIndex: number = 18;
+  currentIndex: number = 10;
+  kmResult: number = 0;
 
   constructor(private db: AngularFireDatabase) {
-    this.runs = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').limitToLast(this.currentIndex));
+    this.runs = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').limitToFirst(this.currentIndex));
+    //this.kmResult = this.db.list(this.dbPath, ref => ref.);
   }
 
   addRun(run: Run): any {
     return this.runs.push(run);
   }
 
-  getRuns(): AngularFireList<Run> {
+  getFirstRuns(): AngularFireList<Run> {
     return this.runs;
   }
 
@@ -38,8 +40,8 @@ export class RunService {
   /**
    * 
    */
-  loadMoreRuns() {
-    this.currentIndex += 10;
-    return this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').limitToLast(this.currentIndex));
+  loadMoreRuns(lastItemTime: number): AngularFireList<Run> {
+    const moreRuns: AngularFireList<Run> = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').startAfter(lastItemTime).limitToFirst(10));
+    return moreRuns;
   }
 }

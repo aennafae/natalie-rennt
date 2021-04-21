@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   runsLeft: Run[] = [];
   runsRight: Run[] = [];
   runsBottom: Run[] = [];
+  runsBottomMore: Run[] = []; // When load more is clicked this array is filled
 
   constructor(public dialog: MatDialog, private runService: RunService) { }
 
@@ -44,14 +45,14 @@ export class AppComponent implements OnInit {
 
 
   private getData(): void {
-    this.runService.getRuns().snapshotChanges().pipe(
+    this.runService.getFirstRuns().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
     ).subscribe(runs => {
-      this.runs = runs.reverse();
+      this.runs = runs;
 
       this.runsLeft = this.runs.slice(0, 3).map(i => {
         return i;
@@ -87,7 +88,21 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   loadMoreRuns(): void {
-
+    const lastItemTime = this.runsBottom[this.runsBottom.length - 1].timestamp;
+    if (lastItemTime) {
+      this.runService.loadMoreRuns(lastItemTime).snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe(runs => {
+        this.runsBottom = [...this.runsBottom, ...runs];
+      });
+    }
   }
 }

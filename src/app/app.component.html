@@ -50,10 +50,12 @@
       <div class="d-flex flex-wrap">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
       </div>
+    </div>
 
+    <div class="col-12 text-center">
       <button id="load-more-runs-button"
-      mat-fab
-      class="dialog-button"
+      mat-raised-button	
+      color="accent"
       (click)="loadMoreRuns()"
       title="Lade mehr">Mehr laden
     </button>
@@ -63,6 +65,7 @@
 
 <ng-template #runItem let-runsx="runsx">
   <div class="run-item my-2 mx-2 p-2" *ngFor="let run of runsx">
+    {{run.key}}
     <div class="run-item__name">
       {{ run.vorname }}
       {{ run.name }}
