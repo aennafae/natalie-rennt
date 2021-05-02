@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -39,7 +40,8 @@ export class DialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private runService: RunService
+    private runService: RunService,
+    private datePipe: DatePipe
   ) {
     this.minDate.setDate(this.maxDate.getDate() - 7);
     this.run.controls.datum.setValue(this.maxDate);
@@ -51,19 +53,19 @@ export class DialogComponent {
 
   saveRun(): void {
     if (this.validateForm()) {
-      const newRun: Run = {
-        name: this.run.controls.name.value,
-        vorname: this.run.controls.vorname.value,
-        datum: this.run.controls.datum.value,
-        km: parseInt(this.run.controls.km.value),
-        ort: this.run.controls.ort.value,
-        email: this.run.controls.email.value,
-        werbung: this.run.controls.werbung.value,
+      const newRun = new Run();
+
+      newRun.name = this.run.controls.name.value,
+        newRun.vorname = this.run.controls.vorname.value,
+        newRun.datum = this.datePipe.transform(this.run.controls.datum.value, 'dd.MM.yyyy'),
+        newRun.km = parseInt(this.run.controls.km.value),
+        newRun.ort = this.run.controls.ort.value,
+        newRun.email = this.run.controls.email.value,
+        newRun.werbung = this.run.controls.werbung.value,
+        newRun.timestamp = Date.now(),
         //picture: this.pictureBasepath,
-      };
-      this.runService.addRun(newRun).subscribe((data) => {
-        this.dialogRef.close();
-      });
+        this.runService.addRun(newRun);
+      this.dialogRef.close();
     } else {
     }
   }

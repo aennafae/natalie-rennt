@@ -44,13 +44,9 @@
   }
 }
 
-.grid-item{
-  width: 200px;
-}
-
-.grid-item--map-image {
-  position: absolute;
-  width: 400px;
+.map-image {
+  width: 80%;
+  height: auto;
 }
 
 @media (min-width: 768px) {

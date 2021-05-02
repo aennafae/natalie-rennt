@@ -1,6 +1,5 @@
-import { state, trigger } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { Run } from './models/models';
@@ -14,21 +13,44 @@ import { RunService } from './services/run.service';
 export class AppComponent implements OnInit {
   title = 'natalie-rennt';
 
-  kilometer: number = 0;
-
+  kilometer: Promise<number> | undefined;
   progressbarValue: number = 0;
-
   kilometerMax: number = 515;
+  runsToLoad: number = 10;
+  showLoadMoreButton: boolean = false;
 
-  runs: Run[] = [];
+  runsFirst: Run[] = [];
   runsLeft: Run[] = [];
   runsRight: Run[] = [];
   runsBottom: Run[] = [];
+  runsBottomMore: Run[] = []; // When load more is clicked this array is filled
 
-  constructor(public dialog: MatDialog, private runService: RunService) { }
+  allRuns: Promise<Run[]> | undefined;
+  runsLoading = false;
+
+  constructor(public dialog: MatDialog, private runService: RunService) {
+    this.runService.getAllRuns().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(runs => {
+      if (runs.length <= this.runsToLoad) {
+        this.showLoadMoreButton = false;
+      } else {
+        this.showLoadMoreButton = true;
+      }
+
+      this.allRuns = new Promise((resolve) => {
+        resolve(runs);
+      })
+      this.kilometer = this.calculateKilometer(runs);
+    });
+  }
 
   ngOnInit() {
-    this.getData();
+    this.getFirstRuns();
   }
 
   openDialog(): void {
@@ -37,23 +59,29 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getData();
+      this.getFirstRuns();
     });
   }
 
-  private getData(): void {
-    this.runService.getRuns().subscribe((data) => {
-      this.runs = data.reverse();
-      this.runsLeft = this.runs.slice(0, 3).map(i => {
+  private getFirstRuns(): void {
+    this.runService.getFirstRuns().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(runs => {
+      runs.reverse();
+      this.runsFirst = runs;
+      this.runsLeft = this.runsFirst.slice(0, 3).map(i => {
         return i;
       });
-      this.runsRight = this.runs.slice(3, 6).map(i => {
+      this.runsRight = this.runsFirst.slice(3, 6).map(i => {
         return i;
       });
-      this.runsBottom = this.runs.slice(6, this.runs.length).map(i => {
+      this.runsBottom = this.runsFirst.slice(6, this.runsFirst.length).map(i => {
         return i;
       });
-      this.calculateKilometer(data);
     });
   }
 
@@ -62,18 +90,45 @@ export class AppComponent implements OnInit {
    * Calculates Progressbar value to display. Progress value is 100% for 515km.
    * @param runs
    */
-  private calculateKilometer(runs: Run[]) {
-    this.kilometer = 0;
-    for (const run of runs) {
-      if (run.km) {
-        this.kilometer += run.km;
+  private calculateKilometer(runs: Run[]): Promise<number> {
+    return new Promise((resolve) => {
+      let kilometer = 0;
+      for (const run of runs) {
+        if (run.km) {
+          kilometer += run.km;
+        }
       }
-    }
 
-    if (this.kilometer >= this.kilometerMax) {
-      this.progressbarValue = 100;
-    } else {
-      this.progressbarValue = (this.kilometer * 100) / this.kilometerMax;
-    }
+      // If kilometers are more than maximum kilometers progressbar is set to 100%
+      if (kilometer >= this.kilometerMax) {
+        this.progressbarValue = 100;
+      } else {
+        this.progressbarValue = kilometer * 100 / this.kilometerMax;
+      }
+      resolve(kilometer);
+    });
+  }
+
+  /**
+   * 
+   */
+  showMoreRuns(): void {
+    this.runsLoading = true;
+    this.allRuns?.then(runs => {
+      runs.reverse();
+
+      //Current runs amount visible
+      const currentAmount = this.runsLeft.length + this.runsRight.length + this.runsBottom.length;
+      const moreRuns = runs.slice(currentAmount, currentAmount + this.runsToLoad);
+
+      if (currentAmount < runs.length) {
+        this.showLoadMoreButton = true;
+      } else {
+        this.showLoadMoreButton = false;
+      }
+
+      this.runsBottom = [...this.runsBottom, ...moreRuns];
+      this.runsLoading = false;
+    });
   }
 }
