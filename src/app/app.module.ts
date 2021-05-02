@@ -4,7 +4,6 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatFormFieldModule,
@@ -42,7 +41,6 @@ registerLocaleData(localeDe, localeDeExtra);
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

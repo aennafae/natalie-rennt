@@ -12,6 +12,7 @@ import { RunService } from './services/run.service';
 })
 export class AppComponent implements OnInit {
   title = 'natalie-rennt';
+  pageLoaded = false;
 
   kilometer: Promise<number> | undefined;
   progressbarValue: number = 0;
@@ -27,6 +28,9 @@ export class AppComponent implements OnInit {
 
   allRuns: Promise<Run[]> | undefined;
   runsLoading = false;
+
+  // Width of the red background container for show the km on the map
+  mapKmWidth = '30.6%';
 
   constructor(public dialog: MatDialog, private runService: RunService) {
     this.runService.getAllRuns().snapshotChanges().pipe(
@@ -63,6 +67,9 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   private getFirstRuns(): void {
     this.runService.getFirstRuns().snapshotChanges().pipe(
       map(changes =>
@@ -82,6 +89,10 @@ export class AppComponent implements OnInit {
       this.runsBottom = this.runsFirst.slice(6, this.runsFirst.length).map(i => {
         return i;
       });
+
+      setTimeout(() => {
+        this.pageLoaded = true;
+      }, 600)
     });
   }
 
@@ -102,7 +113,10 @@ export class AppComponent implements OnInit {
       // If kilometers are more than maximum kilometers progressbar is set to 100%
       if (kilometer >= this.kilometerMax) {
         this.progressbarValue = 100;
+        this.mapKmWidth = '100%'
       } else {
+        const kmInPercent = (kilometer * 50 / this.kilometerMax) + 30.6;
+        this.mapKmWidth = kmInPercent.toString() + '%';
         this.progressbarValue = kilometer * 100 / this.kilometerMax;
       }
       resolve(kilometer);
@@ -129,6 +143,14 @@ export class AppComponent implements OnInit {
 
       this.runsBottom = [...this.runsBottom, ...moreRuns];
       this.runsLoading = false;
+
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100)
     });
+  }
+
+  private scrollToBottom(): void {
+    document.getElementById('load-more-runs-button')?.scrollIntoView({ behavior: 'smooth' });
   }
 }
