@@ -9,20 +9,21 @@ export class RunService {
   private dbPath = '/runs';
 
   runs: AngularFireList<Run>;
-  currentIndex: number = 10;
-  kmResult: number = 0;
+  runsToLoadLimit: number = 10;
 
   constructor(private db: AngularFireDatabase) {
-    this.runs = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').limitToFirst(this.currentIndex));
-    //this.kmResult = this.db.list(this.dbPath, ref => ref.);
+    this.runs = this.db.list(this.dbPath);
   }
 
   addRun(run: Run): any {
     return this.runs.push(run);
   }
 
+  /**
+   * Returns the last 10 runs
+   */
   getFirstRuns(): AngularFireList<Run> {
-    return this.runs;
+    return this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').limitToLast(this.runsToLoadLimit));
   }
 
   deleteAllRuns(): Promise<void> {
@@ -38,10 +39,13 @@ export class RunService {
   }
 
   /**
-   * 
+   * Query to load more runs starting form a specific position and limited to a specific amount of runs.
    */
   loadMoreRuns(lastItemTime: number): AngularFireList<Run> {
-    const moreRuns: AngularFireList<Run> = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').startAfter(lastItemTime).limitToFirst(10));
-    return moreRuns;
+    return this.db.list(this.dbPath, ref => ref.orderByChild('timestamp').startAfter(lastItemTime).limitToLast(this.runsToLoadLimit));
+  }
+
+  getAllRuns(): AngularFireList<Run> {
+    return this.runs;
   }
 }

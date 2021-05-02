@@ -30,6 +30,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.firebase';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -50,6 +52,8 @@ registerLocaleData(localeDe, localeDeExtra);
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'natalie-rennt'),
     AngularFireDatabaseModule
   ],
