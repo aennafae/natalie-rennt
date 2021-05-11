@@ -63,8 +63,9 @@ export class DialogComponent {
         newRun.email = this.run.controls.email.value,
         newRun.werbung = this.run.controls.werbung.value,
         newRun.timestamp = Date.now(),
-        //picture: this.pictureBasepath,
-        this.runService.addRun(newRun);
+        newRun.isPublic = false;
+      //picture: this.pictureBasepath,
+      this.runService.addRun(newRun);
       this.dialogRef.close();
     } else {
     }

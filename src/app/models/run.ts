@@ -9,4 +9,5 @@ export class Run {
   werbung?: boolean;
   email?: string;
   timestamp?: number | null;
+  isPublic?: boolean;
 }

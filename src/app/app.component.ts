@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { Run } from './models/models';
 import { RunService } from './services/run.service';
+import * as _ from 'lodash';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +17,10 @@ export class AppComponent implements OnInit {
   pageLoaded = false;
 
   kilometer: Promise<number> | undefined;
+  championlist: Promise<Run[]> | undefined;
   progressbarValue: number = 0;
   kilometerMax: number = 515;
-  runsToLoad: number = 10;
+  numberOfRunsToLoad: number = 10;
   showLoadMoreButton: boolean = false;
 
   runsFirst: Run[] = [];
@@ -26,7 +29,7 @@ export class AppComponent implements OnInit {
   runsBottom: Run[] = [];
   runsBottomMore: Run[] = []; // When load more is clicked this array is filled
 
-  allRuns: Promise<Run[]> | undefined;
+  visibleRuns$: Promise<Run[]> | undefined;
   runsLoading = false;
 
   // Width of the red background container for show the km on the map
@@ -40,16 +43,19 @@ export class AppComponent implements OnInit {
         )
       )
     ).subscribe(runs => {
-      if (runs.length <= this.runsToLoad) {
+      const visibleRuns = this.getPublicRuns(runs);
+
+      if (visibleRuns.length <= this.numberOfRunsToLoad) {
         this.showLoadMoreButton = false;
       } else {
         this.showLoadMoreButton = true;
       }
 
-      this.allRuns = new Promise((resolve) => {
-        resolve(runs);
-      })
-      this.kilometer = this.calculateKilometer(runs);
+      this.visibleRuns$ = new Promise((resolve) => {
+        resolve(visibleRuns);
+      });
+      this.kilometer = this.calculateKilometer(visibleRuns);
+      this.championlist = this.getChampions(visibleRuns);
     });
   }
 
@@ -71,15 +77,18 @@ export class AppComponent implements OnInit {
    * 
    */
   private getFirstRuns(): void {
-    this.runService.getFirstRuns().snapshotChanges().pipe(
+    this.runService.getAllRuns().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
     ).subscribe(runs => {
+      _.sortBy(runs, ['timestamp']);
       runs.reverse();
-      this.runsFirst = runs;
+
+      this.runsFirst = _.filter(runs, _.matches({ isPublic: true }));;
+
       this.runsLeft = this.runsFirst.slice(0, 3).map(i => {
         return i;
       });
@@ -113,7 +122,7 @@ export class AppComponent implements OnInit {
       // If kilometers are more than maximum kilometers progressbar is set to 100%
       if (kilometer >= this.kilometerMax) {
         this.progressbarValue = 100;
-        this.mapKmWidth = '100%'
+        this.mapKmWidth = '100%';
       } else {
         const kmInPercent = (kilometer * 50 / this.kilometerMax) + 30.6;
         this.mapKmWidth = kmInPercent.toString() + '%';
@@ -128,12 +137,12 @@ export class AppComponent implements OnInit {
    */
   showMoreRuns(): void {
     this.runsLoading = true;
-    this.allRuns?.then(runs => {
+    this.visibleRuns$?.then(runs => {
       runs.reverse();
 
       //Current runs amount visible
       const currentAmount = this.runsLeft.length + this.runsRight.length + this.runsBottom.length;
-      const moreRuns = runs.slice(currentAmount, currentAmount + this.runsToLoad);
+      const moreRuns = runs.slice(currentAmount, currentAmount + this.numberOfRunsToLoad);
 
       if (currentAmount < runs.length) {
         this.showLoadMoreButton = true;
@@ -152,5 +161,27 @@ export class AppComponent implements OnInit {
 
   private scrollToBottom(): void {
     document.getElementById('load-more-runs-button')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /**
+   * 
+   * @param runs 
+   * @returns Array mit Daten sortiert Neuste zuerst und isPublic=true
+   */
+  private getPublicRuns(runs: Run[]): Run[] {
+    _.sortBy(runs, ['timestamp']);
+    runs.reverse();
+    return _.filter(runs, _.matches({ isPublic: true }));;
+  }
+
+  /**
+   * Daten mit gleicher Name, Vorname, Email zusammenrechnen.
+   */
+  private getChampions(runs: Run[]): Promise<Run[]> {
+
+    return new Promise((resolve) => {
+      const champoins = _.maxBy(runs, 'km');
+      resolve(champoins);
+    });
   }
 }
