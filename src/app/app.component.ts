@@ -5,7 +5,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { Run } from './models/models';
 import { RunService } from './services/run.service';
 import * as _ from 'lodash';
-import { resolve } from 'dns';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
     ).subscribe(runs => {
       const visibleRuns = this.getPublicRuns(runs);
 
-      if (visibleRuns.length <= this.numberOfRunsToLoad) {
+      if (visibleRuns.length < this.numberOfRunsToLoad) {
         this.showLoadMoreButton = false;
       } else {
         this.showLoadMoreButton = true;
@@ -55,7 +54,7 @@ export class AppComponent implements OnInit {
         resolve(visibleRuns);
       });
       this.kilometer = this.calculateKilometer(visibleRuns);
-      this.championlist = this.getChampions(visibleRuns);
+      // this.championlist = this.getChampions(visibleRuns);
     });
   }
 
@@ -88,15 +87,16 @@ export class AppComponent implements OnInit {
       runs.reverse();
 
       this.runsFirst = _.filter(runs, _.matches({ isPublic: true }));;
+      this.runsFirst = this.runsFirst.slice(0, this.numberOfRunsToLoad); // Only 10 to show at first
 
-      this.runsLeft = this.runsFirst.slice(0, 3).map(i => {
-        return i;
+      this.runsLeft = this.runsFirst.slice(0, 3).map(run => {
+        return run;
       });
-      this.runsRight = this.runsFirst.slice(3, 6).map(i => {
-        return i;
+      this.runsRight = this.runsFirst.slice(3, 6).map(run => {
+        return run;
       });
-      this.runsBottom = this.runsFirst.slice(6, this.runsFirst.length).map(i => {
-        return i;
+      this.runsBottom = this.runsFirst.slice(6, this.runsFirst.length).map(run => {
+        return run;
       });
 
       setTimeout(() => {
@@ -138,21 +138,19 @@ export class AppComponent implements OnInit {
   showMoreRuns(): void {
     this.runsLoading = true;
     this.visibleRuns$?.then(runs => {
-      runs.reverse();
-
       //Current runs amount visible
       const currentAmount = this.runsLeft.length + this.runsRight.length + this.runsBottom.length;
+      //load from current amount to +10 more
       const moreRuns = runs.slice(currentAmount, currentAmount + this.numberOfRunsToLoad);
-
-      if (currentAmount < runs.length) {
-        this.showLoadMoreButton = true;
-      } else {
-        this.showLoadMoreButton = false;
-      }
 
       this.runsBottom = [...this.runsBottom, ...moreRuns];
       this.runsLoading = false;
 
+      if ((currentAmount + moreRuns.length) < runs.length) {
+        this.showLoadMoreButton = true;
+      } else {
+        this.showLoadMoreButton = false;
+      }
       setTimeout(() => {
         this.scrollToBottom();
       }, 100)
@@ -164,7 +162,7 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * 
+   * Gibt nur die Runs mit isPublic=true zurück.
    * @param runs 
    * @returns Array mit Daten sortiert Neuste zuerst und isPublic=true
    */
@@ -181,7 +179,25 @@ export class AppComponent implements OnInit {
 
     return new Promise((resolve) => {
       const champoins = _.maxBy(runs, 'km');
-      resolve(champoins);
+
+      runs.forEach((run, index) => {
+        run.name
+
+        // remove current run from array
+        const runArrayRest = runs.splice(index, 1);
+        let kmFromRun = run.km;
+
+        runArrayRest.forEach((runRest, runRestIndex) => {
+          // If name, vorname, email is same... calculate the km and delte from array
+          if (run.name === runRest.name && run.vorname === runRest.vorname && run.email === runRest.email) {
+            if (run.km && kmFromRun) {
+              kmFromRun += run.km;
+              runArrayRest.splice(runRestIndex, 1);
+            }
+          }
+        });
+      })
+      // resolve(champoins);
     });
   }
 }

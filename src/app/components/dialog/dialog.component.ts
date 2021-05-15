@@ -72,7 +72,6 @@ export class DialogComponent {
   }
 
   private validateForm(): boolean {
-    debugger;
     let isValid = true;
     this.run.controls.name.setValue(this.run.controls.name.value.trim());
     this.run.controls.name.updateValueAndValidity();
