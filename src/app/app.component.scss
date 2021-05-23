@@ -23,6 +23,30 @@ $main-color:  #e3000f;
   }
 }
 
+.championlist {
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  border-radius: 30px;
+  background-color: $main-color;
+  color: white;
+
+  &__place {
+    font-size: 22px;
+    padding: 8px 0;
+    border-radius: 50%;
+    background-color: white;
+    color: black;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: inset 0px 0px 6px 1px rgb(0 0  0/ 19%);
+  }
+
+  &__km {
+    font-size: 25px;
+  }
+}
+
 .km-left {
   font-size: 50px;
 }
@@ -39,9 +63,9 @@ $main-color:  #e3000f;
 }
 
 .run-item {
-  border: 1px solid;
   border-radius: 5px;
   width: 300px;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
   &__name {
     font-size: 20px;
   }
@@ -86,11 +110,12 @@ $main-color:  #e3000f;
 .map-progress {
   background-color: $main-color;
   //width: 30.6%;
-  height: 100%;
+  height: 99%;
   position: absolute;
-  top: 0;
+  top: 2px;
   z-index: -1;
-  transition: width 0.5s ease-in;
+  transition: width 2s ease-in;
+  width: 0;
 }
 
 @media (min-width: 768px) {

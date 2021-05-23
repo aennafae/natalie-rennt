@@ -2,9 +2,10 @@ import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { Run } from './models/models';
+import { Run, Score } from './models/models';
 import { RunService } from './services/run.service';
 import * as _ from 'lodash';
+import { ScoreService } from './services/score.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   pageLoaded = false;
 
   kilometer: Promise<number> | undefined;
-  championlist: Promise<Run[]> | undefined;
+  championlist: Score[] | undefined;
   progressbarValue: number = 0;
   kilometerMax: number = 515;
   numberOfRunsToLoad: number = 10;
@@ -34,7 +35,28 @@ export class AppComponent implements OnInit {
   // Width of the red background container for show the km on the map
   mapKmWidth = '30.6%';
 
-  constructor(public dialog: MatDialog, private runService: RunService) {
+  constructor(public dialog: MatDialog,
+    private runService: RunService,
+    private scoreService: ScoreService) {
+    this.getAllRuns();
+    this.getChampions();
+  }
+
+  ngOnInit() {
+    this.getFirstRuns();
+  }
+
+  openDialog(): void {
+    let dialogRef = this.dialog.open(DialogComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getFirstRuns();
+    });
+  }
+
+  private getAllRuns(): void {
     this.runService.getAllRuns().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -54,21 +76,18 @@ export class AppComponent implements OnInit {
         resolve(visibleRuns);
       });
       this.kilometer = this.calculateKilometer(visibleRuns);
-      // this.championlist = this.getChampions(visibleRuns);
     });
   }
 
-  ngOnInit() {
-    this.getFirstRuns();
-  }
-
-  openDialog(): void {
-    let dialogRef = this.dialog.open(DialogComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getFirstRuns();
+  private getChampions(): void {
+    this.scoreService.getScore().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(score => {
+      this.championlist = score;
     });
   }
 
@@ -170,34 +189,5 @@ export class AppComponent implements OnInit {
     _.sortBy(runs, ['timestamp']);
     runs.reverse();
     return _.filter(runs, _.matches({ isPublic: true }));;
-  }
-
-  /**
-   * Daten mit gleicher Name, Vorname, Email zusammenrechnen.
-   */
-  private getChampions(runs: Run[]): Promise<Run[]> {
-
-    return new Promise((resolve) => {
-      const champoins = _.maxBy(runs, 'km');
-
-      runs.forEach((run, index) => {
-        run.name
-
-        // remove current run from array
-        const runArrayRest = runs.splice(index, 1);
-        let kmFromRun = run.km;
-
-        runArrayRest.forEach((runRest, runRestIndex) => {
-          // If name, vorname, email is same... calculate the km and delte from array
-          if (run.name === runRest.name && run.vorname === runRest.vorname && run.email === runRest.email) {
-            if (run.km && kmFromRun) {
-              kmFromRun += run.km;
-              runArrayRest.splice(runRestIndex, 1);
-            }
-          }
-        });
-      })
-      // resolve(champoins);
-    });
   }
 }

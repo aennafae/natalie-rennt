@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Run } from '../models/models';
+import { Run, Score } from '../models/models';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Injectable({
@@ -7,15 +7,19 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 })
 export class RunService {
   private dbPath = '/runs';
+  private dbPathScore = '/score';
 
   runs: AngularFireList<Run>;
+  score: AngularFireList<Score>;
   numberOfRunsToLoadLimit: number = 10;
 
   constructor(private db: AngularFireDatabase) {
     this.runs = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp'));
+    this.score = this.db.list(this.dbPathScore, ref => ref.orderByChild('km'));
   }
 
   addRun(run: Run): any {
+    debugger;
     return this.runs.push(run);
   }
 
