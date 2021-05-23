@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   runsBottom: Run[] = [];
   runsBottomMore: Run[] = []; // When load more is clicked this array is filled
 
-  visibleRuns$: Promise<Run[]> | undefined;
+  allRuns$: Promise<Run[]> | undefined;
   runsLoading = false;
 
   // Width of the red background container for show the km on the map
@@ -72,10 +72,11 @@ export class AppComponent implements OnInit {
         this.showLoadMoreButton = true;
       }
 
-      this.visibleRuns$ = new Promise((resolve) => {
-        resolve(visibleRuns);
+      this.kilometer = this.calculateKilometer(runs);
+
+      this.allRuns$ = new Promise((resolve) => {
+        resolve(runs);
       });
-      this.kilometer = this.calculateKilometer(visibleRuns);
     });
   }
 
@@ -156,7 +157,7 @@ export class AppComponent implements OnInit {
    */
   showMoreRuns(): void {
     this.runsLoading = true;
-    this.visibleRuns$?.then(runs => {
+    this.allRuns$?.then(runs => {
       //Current runs amount visible
       const currentAmount = this.runsLeft.length + this.runsRight.length + this.runsBottom.length;
       //load from current amount to +10 more
