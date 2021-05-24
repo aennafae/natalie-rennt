@@ -11,7 +11,7 @@ export class RunService {
 
   runs: AngularFireList<Run>;
   score: AngularFireList<Score>;
-  numberOfRunsToLoadLimit: number = 10;
+  numberOfRunsToLoadLimit: number = 12;
 
   constructor(private db: AngularFireDatabase) {
     this.runs = this.db.list(this.dbPath, ref => ref.orderByChild('timestamp'));

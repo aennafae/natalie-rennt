@@ -14,66 +14,6 @@ $main-color:  #e3000f;
   }
 }
 
-.app-container{
-  opacity: 0;
-  transition: all .5s ease-in;
- 
- &.visible {
-    opacity: 1;
-  }
-}
-
-.championlist {
-  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
-  border-radius: 30px;
-  background-color: $main-color;
-  color: white;
-
-  &__place {
-    font-size: 22px;
-    padding: 8px 0;
-    border-radius: 50%;
-    background-color: white;
-    color: black;
-    width: 45px;
-    height: 45px;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: inset 0px 0px 6px 1px rgb(0 0  0/ 19%);
-  }
-
-  &__km {
-    font-size: 25px;
-  }
-}
-
-.km-left {
-  font-size: 50px;
-}
-
-.km-current {
-  font-size: 50px;
-}
-
-.dialog-button {
-  font-size: 40px;
-  background-color: $main-color;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  animation: pulse 2s infinite;
-}
-
-.run-item {
-  border-radius: 5px;
-  width: 300px;
-  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
-  &__name {
-    font-size: 20px;
-  }
-  &__km {
-    font-size: 35px;
-  }
-}
-
 ::ng-deep {
   .run-progressbar.mat-progress-bar {
     height: 10px;
@@ -89,6 +29,191 @@ $main-color:  #e3000f;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+.app-container{
+  opacity: 0;
+  transition: all .5s ease-in;
+ 
+ &.visible {
+    opacity: 1;
+  }
+}
+.championlist-wrapper {
+  padding: 10px;
+
+  h2 {
+    color: $main-color;
+    font-size: 42px;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+}
+
+.championlist {
+  box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
+  border-radius: 10px;
+  background-color: $main-color;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+
+  &__place {
+    padding: 8px 0;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+// Half Gauge progress km
+.progess-km-mask {
+  position: relative;
+  overflow: hidden;
+
+  display: block;
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.progess-km-semi-circle {
+  position: relative;
+
+  display: block;
+  width: 200px;
+  height: 100px;
+ 
+  background: $main-color;
+
+  border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    z-index: 2;
+    display: block;
+    width: 140px;
+    height: 70px;
+    background: #fff;
+    border-radius: 50% 50% 50% 50%/100% 100% 0% 0%;
+  }      
+}
+
+.progess-km-semi-circle--mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 200px;
+  height: 200px;
+
+  background: transparent;
+
+  transform: rotate(120deg) translate3d(0,0,0);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: all .3s ease-in-out;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0%;
+    z-index: 2;
+
+    display: block;
+    width: 200px;
+    height: 100px;
+    margin: -1px 0 0 -1px;
+
+    background: #f2f2f2;
+
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+  }      
+}
+
+.km-current {
+  font-size: 40px;
+
+  &__days {
+    font-size: 16px;
+  }
+
+  &__left {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -75px;
+    margin-left: 115px;
+  }
+
+  &__now{
+    left: 50%;
+    transform: translateX(-50%);
+    top: -75px;
+    margin-left: -115px;
+  }
+}
+
+.dialog-button {
+  font-size: 40px;
+  background-color: $main-color;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  animation: pulse 2s infinite;
+}
+
+.run-item {
+  border-radius: 5px;
+  width: 225px;
+  box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
+  position: relative;
+
+  &__name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  &__km {
+    font-size: 55px;
+    letter-spacing: 2px;
+  }
+
+  &__datum {
+    font-size: 14px;
+    color: grey;
+  }
+}
+
+.left-runs {
+  .run-item:nth-child(1) {
+    left: 395px;
+  }
+  .run-item:nth-child(2) {
+    left: 360px;
+  }
+  .run-item:nth-child(3) {
+    left: 380px;
+  }
+  .run-item:nth-child(4) {
+    left: 380px;
+  }
+}
+
+.right-runs {
+  .run-item:nth-child(1) {
+    right: 50px;
+  }
+  .run-item:nth-child(2) {
+    left: 30px;
+  }
+  .run-item:nth-child(3) {
+    right: 15px;
   }
 }
 

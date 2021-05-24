@@ -1,46 +1,51 @@
 <div class="container-flex app-container" [ngClass]="pageLoaded ? 'visible' : ''">
   <div class="container"  *ngIf="pageLoaded">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 col-sm-8">
         <h1>Natalie läuft bis nach Berlin!</h1>
         <h2>
           Unterstütze Sie und laufe mit! Dein Lauf mit deiner
           KM-Zahl hoch.
         </h2>
       </div>
-
-      <div class="col-12 col-sm-6">
-        <div class="km-current d-flex align-items-center">
-          <mat-spinner [diameter]="40" *ngIf="!kilometer"></mat-spinner>{{ kilometer | async}} km</div>
-        <div class="km-left">{{ kilometerMax }} km</div>
-        <div class="mt-3">
-          <div>100 Tage verbleiben</div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6">
-        <div class="championlist mb-3" *ngFor="let champion of championlist;let i=index">
-          <div class="p-2 d-flex flex-direction-coloumn align-items-center" >
-            <div class="championlist__place mr-3">{{i+1}}</div>
-            <div class="championlist__name">{{champion.name}} {{champion.vorname}}</div>
-            <div class="championlist__km ml-auto mr-3">{{champion.km}}<span>km</span></div>
+      <div class="col-12 col-sm-4">
+        <div class="championlist-wrapper">
+          <h2 class="text-center">HIGHSCORE</h2>
+          <div class="championlist mb-2" *ngFor="let champion of championlist;let i=index">
+            <div class="p-1 d-flex flex-direction-coloumn align-items-center" >
+              <div class="championlist__place mr-3">{{i+1}}</div>
+              <div class="championlist__name">{{champion.name}} {{champion.vorname}}</div>
+              <div class="championlist__km ml-auto mr-3">{{champion.km}}<span>km</span></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row my-4">
-    <div class="col text-center">
+
+  <div class="row">
+    <div class="col text-center mb-4">
+      <div class="progess-km-mask">
+        <div class="progess-km-semi-circle"></div>
+        <div class="progess-km-semi-circle--mask"></div>
+      </div>
       <button id="add-card-button"
         mat-fab
         class="dialog-button"
         (click)="openDialog()"
         title="Lade deinen Lauf hoch">+
       </button>
+
+      <div class="km-current position-relative">
+        <mat-spinner [diameter]="40" *ngIf="!kilometer"></mat-spinner>
+        <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
+        <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
+        <div class="km-current__days mt-3">100 Tage verbleiben</div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-4" *ngIf="runsFirst">
+    <div class="col-sm-4 left-runs" *ngIf="runsFirst">
       <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
     </div>
 
@@ -49,11 +54,11 @@
       <div class="map-progress" [style.width]="mapKmWidth"></div>
     </div>
 
-    <div class="col-sm-4" *ngIf="runsFirst">
+    <div class="col-sm-4 right-runs" *ngIf="runsFirst">
       <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsRight}"></ng-container> 
     </div>
 
-    <div class="col-12" *ngIf="runsFirst">
+    <div class="col-12 bottom-runs" *ngIf="runsFirst">
       <div class="d-flex flex-wrap">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
       </div>
@@ -71,19 +76,17 @@
     </button>
       </div>
   </div>
-</div>
 
-<mat-spinner [diameter]="100" class="page-loading-spinner" *ngIf="!pageLoaded"></mat-spinner>
+<mat-spinner [diameter]="50" class="page-loading-spinner" *ngIf="!pageLoaded"></mat-spinner>
 
 <ng-template #runItem let-runsx="runsx">
-  <div class="run-item my-2 my-sm-4 mx-2 p-3" *ngFor="let run of runsx">
-    <div class="run-item__name">
+  <div class="run-item my-2 my-sm-4 mx-2 py-3" *ngFor="let run of runsx">
+    <div class="run-item__name px-3 mb-2">
       {{ run.vorname }}
       {{ run.name }}
     </div>
-
-    <div class="run-item__datum">{{ run.datum}}</div>
-    <div class="run-item__km">{{ run.km }} km</div>
-    <div class="run-item__ort">{{ run.ort }}</div>
+    <mat-divider></mat-divider>
+    <div class="run-item__km px-3">{{ run.km }}km</div>
+    <div class="run-item__datum px-3">{{ run.datum}}, {{ run.ort }}</div>
   </div>
 </ng-template>

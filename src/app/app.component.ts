@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   championlist: Score[] | undefined;
   progressbarValue: number = 0;
   kilometerMax: number = 515;
-  numberOfRunsToLoad: number = 10;
+  numberOfRunsToLoad: number = 12;
   showLoadMoreButton: boolean = false;
 
   runsFirst: Run[] = [];
@@ -109,13 +109,13 @@ export class AppComponent implements OnInit {
       this.runsFirst = _.filter(runs, _.matches({ isPublic: true }));;
       this.runsFirst = this.runsFirst.slice(0, this.numberOfRunsToLoad); // Only 10 to show at first
 
-      this.runsLeft = this.runsFirst.slice(0, 3).map(run => {
+      this.runsLeft = this.runsFirst.slice(0, 4).map(run => {
         return run;
       });
-      this.runsRight = this.runsFirst.slice(3, 6).map(run => {
+      this.runsRight = this.runsFirst.slice(4, 8).map(run => {
         return run;
       });
-      this.runsBottom = this.runsFirst.slice(6, this.runsFirst.length).map(run => {
+      this.runsBottom = this.runsFirst.slice(8, this.runsFirst.length).map(run => {
         return run;
       });
 
