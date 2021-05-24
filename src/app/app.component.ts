@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
       this.kilometer = this.calculateKilometer(runs);
 
       this.allRuns$ = new Promise((resolve) => {
-        resolve(runs);
+        resolve(visibleRuns);
       });
     });
   }
@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
       runs.reverse();
 
       this.runsFirst = _.filter(runs, _.matches({ isPublic: true }));;
-      this.runsFirst = this.runsFirst.slice(0, this.numberOfRunsToLoad); // Only 10 to show at first
+      this.runsFirst = this.runsFirst.slice(0, this.numberOfRunsToLoad); // Only 12 to show at first
 
       this.runsLeft = this.runsFirst.slice(0, 4).map(run => {
         return run;
