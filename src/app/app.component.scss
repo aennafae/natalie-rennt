@@ -1,4 +1,4 @@
-$main-color:  #e3000f;
+@import "../variables";
 
 @keyframes pulse {
   0% {
@@ -31,6 +31,8 @@ $main-color:  #e3000f;
     transform: translate(-50%, -50%);
   }
 }
+
+
 
 .app-container{
   opacity: 0;
