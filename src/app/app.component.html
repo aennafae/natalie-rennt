@@ -1,4 +1,4 @@
-<div class="container-flex app-container" [ngClass]="pageLoaded ? 'visible' : ''">
+<div class="app-container" [ngClass]="pageLoaded ? 'visible' : ''">
   <div class="container"  *ngIf="pageLoaded">
     <div class="row">
       <div class="col-12 col-sm-8">
@@ -21,13 +21,12 @@
         </div>
       </div>
     </div>
-  </div>
 
   <div class="row">
     <div class="col text-center mb-4">
       <div class="progess-km-mask">
         <div class="progess-km-semi-circle"></div>
-        <div class="progess-km-semi-circle--mask"></div>
+        <div class="progess-km-semi-circle--mask" [ngStyle]="{'transform': 'rotate('+ kmRotation +'deg)' }"></div>
       </div>
       <button id="add-card-button"
         mat-fab
@@ -45,26 +44,26 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-4 left-runs" *ngIf="runsFirst">
+    <div class="col-sm-3 left-runs d-flex flex-wrap  d-sm-block" *ngIf="runsFirst">
       <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
     </div>
 
-    <div class="col-sm-4 text-center map-container p-0">
+    <div class="col-sm-6 text-center map-container p-0">
       <img src="./assets/deutschlandkarte-lauf.png"  class="map-image"/>
       <div class="map-progress" [style.width]="mapKmWidth"></div>
     </div>
 
-    <div class="col-sm-4 right-runs" *ngIf="runsFirst">
+    <div class="col-sm-3 right-runs d-flex flex-wrap d-sm-block" *ngIf="runsFirst">
       <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsRight}"></ng-container> 
     </div>
 
     <div class="col-12 bottom-runs" *ngIf="runsFirst">
-      <div class="d-flex flex-wrap mx-5">
+      <div class="d-flex flex-wrap mx-sm-5 runs-container">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
       </div>
     </div>
 
-    <div class="col-12 text-center mt-3" *ngIf="showLoadMoreButton">
+    <div class="col-12 text-center my-4" *ngIf="showLoadMoreButton">
       <button id="load-more-runs-button"
       mat-raised-button	
       (click)="showMoreRuns()"
@@ -76,17 +75,18 @@
     </button>
       </div>
   </div>
+</div>
 
 <mat-spinner [diameter]="50" class="page-loading-spinner" *ngIf="!pageLoaded"></mat-spinner>
 
 <ng-template #runItem let-runsx="runsx">
-  <div class="run-item my-2 my-sm-4 mx-2 py-3" *ngFor="let run of runsx">
-    <div class="run-item__name px-3 mb-2">
+  <div class="run-item py-2 py-sm-3 " *ngFor="let run of runsx">
+    <div class="run-item__name px-2 px-sm-3 mb-2">
       {{ run.vorname }}
       {{ run.name }}
     </div>
     <mat-divider></mat-divider>
-    <div class="run-item__km px-3">{{ run.km }}km</div>
-    <div class="run-item__datum px-3">{{ run.datum}}, {{ run.ort }}</div>
+    <div class="run-item__km px-2 px-sm-3">{{ run.km }}km</div>
+    <div class="run-item__datum px-2  px-sm-3">{{ run.datum}}, {{ run.ort }}</div>
   </div>
 </ng-template>

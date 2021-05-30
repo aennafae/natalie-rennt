@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   progressbarValue: number = 0;
   kilometerMax: number = 515;
   numberOfRunsToLoad: number = 12;
+  numberOfRunsToLoadMore: number = 4;
   showLoadMoreButton: boolean = false;
 
   runsFirst: Run[] = [];
@@ -34,6 +35,9 @@ export class AppComponent implements OnInit {
 
   // Width of the red background container for show the km on the map
   mapKmWidth = '30.6%';
+
+  // Rotation of gauge showing how many km are done
+  kmRotation = 0;
 
   constructor(public dialog: MatDialog,
     private runService: RunService,
@@ -75,7 +79,7 @@ export class AppComponent implements OnInit {
         this.showLoadMoreButton = true;
       }
 
-      this.kilometer = this.calculateKilometer(runs);
+      this.kilometer = this.calculateKilometer(visibleRuns);
 
       this.allRuns$ = new Promise((resolve) => {
         resolve(visibleRuns);
@@ -92,6 +96,7 @@ export class AppComponent implements OnInit {
       )
     ).subscribe(score => {
       this.championlist = score;
+      this.championlist.reverse();
     });
   }
 
@@ -146,10 +151,14 @@ export class AppComponent implements OnInit {
       if (kilometer >= this.kilometerMax) {
         this.progressbarValue = 100;
         this.mapKmWidth = '100%';
+        this.kmRotation = 180;
       } else {
         const kmInPercent = (kilometer * 50 / this.kilometerMax) + 30.6;
         this.mapKmWidth = kmInPercent.toString() + '%';
         this.progressbarValue = kilometer * 100 / this.kilometerMax;
+        setTimeout(() => {
+          this.kmRotation = kilometer * 180 / this.kilometerMax;
+        }, 1000);
       }
       resolve(kilometer);
     });
@@ -164,7 +173,7 @@ export class AppComponent implements OnInit {
       //Current runs amount visible
       const currentAmount = this.runsLeft.length + this.runsRight.length + this.runsBottom.length;
       //load from current amount to +10 more
-      const moreRuns = runs.slice(currentAmount, currentAmount + this.numberOfRunsToLoad);
+      const moreRuns = runs.slice(currentAmount, currentAmount + this.numberOfRunsToLoadMore);
 
       this.runsBottom = [...this.runsBottom, ...moreRuns];
       this.runsLoading = false;

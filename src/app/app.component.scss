@@ -118,10 +118,10 @@
 
   background: transparent;
 
-  transform: rotate(120deg) translate3d(0,0,0);
+  transform: rotate(0deg) translate3d(0,0,0);
   transform-origin: center center;
   backface-visibility: hidden;
-  transition: all .3s ease-in-out;
+  transition: all 1s ease-in-out;
 
   &::before {
     content: "";
@@ -132,8 +132,8 @@
     z-index: 2;
 
     display: block;
-    width: 200px;
-    height: 100px;
+    width: 202px;
+    height: 101px;
     margin: -1px 0 0 -1px;
 
     background: #f2f2f2;
@@ -173,54 +173,45 @@
 
 .run-item {
   border-radius: 5px;
-  width: 225px;
   box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
   position: relative;
+  width: calc(25% - 8px);
+  word-break: break-word;
 
   &__name {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
   }
   &__km {
-    font-size: 55px;
+    font-size: 22px;
     letter-spacing: 2px;
   }
 
   &__datum {
-    font-size: 14px;
+    font-size: 10px;
     color: grey;
   }
 }
 
 .left-runs {
-  .run-item:nth-child(1) {
-    left: 55%;
-  }
-  .run-item:nth-child(2) {
-    left: 45%;
-  }
-  .run-item:nth-child(3) {
-    left: 50%;
-  }
-  .run-item:nth-child(4) {
-    left: 55%;
+  gap: 10px;
+
+  .run-item {
+    margin-bottom: 30px;
   }
 }
 
 .right-runs {
-  .run-item:nth-child(1) {
-    right: 8%;
-  }
-  .run-item:nth-child(2) {
-    left: 7%;
-  }
-  .run-item:nth-child(3) {
-    right: 3%;
+  gap: 10px;
+
+  .run-item {
+    margin-top: 30px;
   }
 }
 
 .map-container {
   overflow: hidden;
+  margin: 0 60px;
 }
 
 .mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
@@ -245,7 +236,69 @@
   width: 0;
 }
 
+.runs-container {
+  margin-top: 15px;
+  gap: 10px;
+}
+
 @media (min-width: 768px) {
+  .map-container {
+    margin: 0;
+  }
+
+  
+  .runs-container {
+    margin-top: 30px;
+    gap: 30px 30px;
+  }
+
   .run-item {
+    width: 225px;
+  
+    &__name {
+      font-size: 18px;
+    }
+    &__km {
+      font-size: 55px;
+    }
+  
+    &__datum {
+      font-size: 14px;
+    }
+  }
+
+  .left-runs {
+    .run-item:nth-child(1) {
+      left: 15%;
+    }
+    .run-item:nth-child(2) {
+      left: -3%;
+    }
+    .run-item:nth-child(3) {
+      left: -9%;
+    }
+    .run-item:nth-child(4) {
+      left: 14%;
+    }
+  }
+  
+  .right-runs {
+    .run-item:nth-child(1) {
+      right: 8%;
+    }
+    .run-item:nth-child(2) {
+      left: 7%;
+    }
+    .run-item:nth-child(3) {
+      right: 3%;
+    }
+  }
+
+  .map-image {
+    height: 500px;
+  }
+
+  .map-progress {
+    height: 497px;
   }
 }

@@ -19,7 +19,6 @@ export class RunService {
   }
 
   addRun(run: Run): any {
-    debugger;
     return this.runs.push(run);
   }
 
