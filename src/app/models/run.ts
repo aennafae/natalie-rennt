@@ -9,4 +9,12 @@ export class Run {
   werbung?: boolean;
   email?: string;
   timestamp?: number | null;
+  isPublic?: boolean;
+}
+
+export class Score {
+  key?: string | null;
+  name?: string;
+  vorname?: string;
+  km?: number;
 }

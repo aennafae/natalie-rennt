@@ -1,3 +1,5 @@
+@import "../variables";
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
@@ -12,44 +14,353 @@
   }
 }
 
-.km-left {
-  font-size: 50px;
-}
-
-.km-current {
-  font-size: 50px;
-}
-
-.dialog-button {
-  font-size: 40px;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  animation: pulse 2s infinite;
-}
-
-.run-item {
-  border: 1px solid;
-  border-radius: 5px;
-  width: 300px;
-  &__name {
-    font-size: 20px;
-  }
-  &__km {
-    font-size: 35px;
-  }
-}
 
 ::ng-deep {
   .run-progressbar.mat-progress-bar {
     height: 10px;
   }
+
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke:$main-color;
+  }
+
+  .mat-progress-spinner.page-loading-spinner, 
+  .mat-spinner.page-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.app-container{
+  opacity: 0;
+  transition: all .5s ease-in;
+ 
+ &.visible {
+    opacity: 1;
+  }
+}
+.championlist-wrapper {
+  padding: 10px;
+
+  h2 {
+    color: $main-color;
+    font-size: 22px;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+}
+
+.championlist {
+  box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
+  border-radius: 10px;
+  background-color: $main-color;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+
+  &__place {
+    padding: 8px 0;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+// Half Gauge progress km
+.progess-km-mask {
+  position: relative;
+  overflow: hidden;
+
+  display: block;
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.progess-km-semi-circle {
+  position: relative;
+
+  display: block;
+  width: 200px;
+  height: 100px;
+ 
+  background: $main-color;
+
+  border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    z-index: 2;
+    display: block;
+    width: 140px;
+    height: 70px;
+    background: #fff;
+    border-radius: 50% 50% 50% 50%/100% 100% 0% 0%;
+  }      
+}
+
+.progess-km-semi-circle--mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 200px;
+  height: 200px;
+
+  background: transparent;
+
+  transform: rotate(0deg) translate3d(0,0,0);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: all 1s ease-in-out;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0%;
+    z-index: 2;
+
+    display: block;
+    width: 202px;
+    height: 101px;
+    margin: -1px 0 0 -1px;
+
+    background: #f2f2f2;
+
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+  }      
+}
+
+.km-current {
+  font-size: 40px;
+
+  &__days {
+    font-size: 16px;
+  }
+
+  &__left {
+    left: 50%;
+    transform: translateX(-50%);
+    top: -75px;
+    margin-left: 115px;
+  }
+
+  &__now{
+    left: 50%;
+    transform: translateX(-50%);
+    top: -75px;
+    margin-left: -115px;
+  }
+}
+
+.dialog-button {
+  font-size: 40px;
+  background-color: $main-color;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  animation: pulse 2s infinite;
+}
+
+.run-item {
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
+  position: relative;
+  width: calc(25% - 8px);
+  word-break: break-word;
+
+  &__name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  &__km {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+
+  &__datum {
+    font-size: 10px;
+    color: grey;
+  }
+}
+
+.left-runs {
+  gap: 10px;
+
+  .run-item {
+    margin-bottom: 30px;
+  }
+}
+
+.right-runs {
+  gap: 10px;
+
+  .run-item {
+    margin-top: 30px;
+  }
+}
+
+.map-container {
+  overflow: hidden;
+  margin: 0 60px;
+}
+
+.mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
+  background-color: $main-color;
+  color: white;
 }
 
 .map-image {
-  width: 80%;
-  height: auto;
+  width: 100%;
+  height: 100%;
+}
+
+// Red background container for showing the km line on the map
+.map-progress {
+  background-color: $main-color;
+  //width: 30.6%;
+  height: 99%;
+  position: absolute;
+  top: 2px;
+  z-index: -1;
+  transition: width 2s ease-in;
+  width: 0;
+}
+
+.runs-container {
+  margin-top: 15px;
+  gap: 10px;
+}
+
+// SOCIAL MEDIA CONTAINER
+.social-media {
+  background-color: $main-color;
+  color: white;
+  padding: 30px 0;
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 22px;
+
+    &:hover {
+      color:  black;
+
+      img {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+      }
+    }
+  }
+
+  span {
+    position: absolute;
+  }
+}
+
+.footer-links {
+  font-size: 12px;
+  padding: 10px 0;
+
+  a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 @media (min-width: 768px) {
+  .map-container {
+    margin: 0;
+  }
+
+  
+  .runs-container {
+    margin-top: 30px;
+    gap: 30px 30px;
+  }
+
   .run-item {
+    width: 225px;
+  
+    &__name {
+      font-size: 18px;
+    }
+    &__km {
+      font-size: 55px;
+    }
+  
+    &__datum {
+      font-size: 14px;
+    }
+  }
+
+  .left-runs {
+    .run-item:nth-child(1) {
+      left: 15%;
+    }
+    .run-item:nth-child(2) {
+      left: -3%;
+    }
+    .run-item:nth-child(3) {
+      left: -9%;
+    }
+    .run-item:nth-child(4) {
+      left: 14%;
+    }
+  }
+  
+  .right-runs {
+    .run-item:nth-child(1) {
+      right: 8%;
+    }
+    .run-item:nth-child(2) {
+      left: 7%;
+    }
+    .run-item:nth-child(3) {
+      right: 3%;
+    }
+  }
+
+  .map-image {
+    height: 500px;
+  }
+
+  .map-progress {
+    height: 497px;
   }
 }
+
+@media (min-width: 992px) {
+  .social-media {
+    h2 {
+      width: 50%;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .map-image {
+    height: 100%;
+  }
+
+  .championlist-wrapper {
+    h2 {
+      font-size: 42px;
+    }
+  }
+}
+

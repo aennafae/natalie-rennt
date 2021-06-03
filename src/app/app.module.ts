@@ -4,7 +4,6 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatFormFieldModule,
@@ -25,13 +24,14 @@ import { AppComponent } from './app.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.firebase';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -42,7 +42,6 @@ registerLocaleData(localeDe, localeDeExtra);
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -53,6 +52,7 @@ registerLocaleData(localeDe, localeDeExtra);
     MatNativeDateModule,
     MatCheckboxModule,
     MatIconModule,
+    MatDividerModule,
     MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'natalie-rennt'),
     AngularFireDatabaseModule

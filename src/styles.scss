@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~bootstrap-4-grid/scss/grid.scss";
+@import "./variables";
 
 * {
-  font-family: "Red Hat Display", sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+body {
+  margin: 0;
+}
+
+// All buttons red
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: $main-color;
 }
