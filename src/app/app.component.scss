@@ -14,6 +14,7 @@
   }
 }
 
+
 ::ng-deep {
   .run-progressbar.mat-progress-bar {
     height: 10px;
@@ -32,8 +33,6 @@
   }
 }
 
-
-
 .app-container{
   opacity: 0;
   transition: all .5s ease-in;
@@ -47,7 +46,7 @@
 
   h2 {
     color: $main-color;
-    font-size: 42px;
+    font-size: 22px;
     letter-spacing: 10px;
     margin-bottom: 10px;
     margin-top: 0;
@@ -241,6 +240,48 @@
   gap: 10px;
 }
 
+// SOCIAL MEDIA CONTAINER
+.social-media {
+  background-color: $main-color;
+  color: white;
+  padding: 30px 0;
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 22px;
+
+    &:hover {
+      color:  black;
+
+      img {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+      }
+    }
+  }
+
+  span {
+    position: absolute;
+  }
+}
+
+.footer-links {
+  font-size: 12px;
+  padding: 10px 0;
+
+  a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .map-container {
     margin: 0;
@@ -302,3 +343,24 @@
     height: 497px;
   }
 }
+
+@media (min-width: 992px) {
+  .social-media {
+    h2 {
+      width: 50%;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .map-image {
+    height: 100%;
+  }
+
+  .championlist-wrapper {
+    h2 {
+      font-size: 42px;
+    }
+  }
+}
+

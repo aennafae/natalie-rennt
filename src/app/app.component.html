@@ -1,14 +1,14 @@
 <div class="app-container" [ngClass]="pageLoaded ? 'visible' : ''">
   <div class="container"  *ngIf="pageLoaded">
     <div class="row">
-      <div class="col-12 col-sm-8">
+      <div class="col-12 col-md-8">
         <h1>Natalie läuft bis nach Berlin!</h1>
         <h2>
           Unterstütze Sie und laufe mit! Dein Lauf mit deiner
           KM-Zahl hoch.
         </h2>
       </div>
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-md-4">
         <div class="championlist-wrapper">
           <h2 class="text-center">HIGHSCORE</h2>
           <div class="championlist mb-2" *ngFor="let champion of championlist;let i=index">
@@ -22,71 +22,112 @@
       </div>
     </div>
 
-  <div class="row">
-    <div class="col text-center mb-4">
-      <div class="progess-km-mask">
-        <div class="progess-km-semi-circle"></div>
-        <div class="progess-km-semi-circle--mask" [ngStyle]="{'transform': 'rotate('+ kmRotation +'deg)' }"></div>
-      </div>
-      <button id="add-card-button"
-        mat-fab
-        class="dialog-button"
-        (click)="openDialog()"
-        title="Lade deinen Lauf hoch">+
-      </button>
+    <div class="row">
+      <div class="col text-center mb-4">
+        <div class="progess-km-mask">
+          <div class="progess-km-semi-circle"></div>
+          <div class="progess-km-semi-circle--mask" [ngStyle]="{'transform': 'rotate('+ kmRotation +'deg)' }"></div>
+        </div>
+        <button id="add-card-button"
+          mat-fab
+          class="dialog-button"
+          (click)="openDialog()"
+          title="Lade deinen Lauf hoch">+
+        </button>
 
-      <div class="km-current position-relative">
-        <mat-spinner [diameter]="40" *ngIf="!kilometer"></mat-spinner>
-        <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
-        <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
-        <div class="km-current__days mt-3">100 Tage verbleiben</div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-3 left-runs d-flex flex-wrap  d-sm-block" *ngIf="runsFirst">
-      <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
-    </div>
-
-    <div class="col-sm-6 text-center map-container p-0">
-      <img src="./assets/deutschlandkarte-lauf.png"  class="map-image"/>
-      <div class="map-progress" [style.width]="mapKmWidth"></div>
-    </div>
-
-    <div class="col-sm-3 right-runs d-flex flex-wrap d-sm-block" *ngIf="runsFirst">
-      <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsRight}"></ng-container> 
-    </div>
-
-    <div class="col-12 bottom-runs" *ngIf="runsFirst">
-      <div class="d-flex flex-wrap mx-sm-5 runs-container">
-        <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
+        <div class="km-current position-relative">
+          <mat-spinner [diameter]="40" *ngIf="!kilometer"></mat-spinner>
+          <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
+          <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
+          <div class="km-current__days mt-3">100 Tage verbleiben</div>
       </div>
     </div>
 
-    <div class="col-12 text-center my-4" *ngIf="showLoadMoreButton">
-      <button id="load-more-runs-button"
-      mat-raised-button	
-      (click)="showMoreRuns()"
-      title="Lade mehr">
-      <div class="d-flex align-items-center">
-        Mehr laden
-        <mat-spinner [diameter]="20" class="ml-2" *ngIf="runsLoading"></mat-spinner>
+    <div class="row">
+      <div class="col-md-3 left-runs d-flex flex-wrap  d-md-block" *ngIf="runsFirst">
+        <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
       </div>
-    </button>
+
+      <div class="col-md-6 text-center map-container p-0">
+        <img src="./assets/deutschlandkarte-lauf.png"  class="map-image"/>
+        <div class="map-progress" [style.width]="mapKmWidth"></div>
       </div>
+
+      <div class="col-md-3 right-runs d-flex flex-wrap d-md-block" *ngIf="runsFirst">
+        <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsRight}"></ng-container> 
+      </div>
+
+      <div class="col-12 bottom-runs" *ngIf="runsFirst">
+        <div class="d-flex flex-wrap mx-md-5 runs-container">
+          <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
+        </div>
+      </div>
+
+      <div class="col-12 text-center my-4" *ngIf="showLoadMoreButton">
+        <button id="load-more-runs-button"
+        mat-raised-button	
+        (click)="showMoreRuns()"
+        title="Lade mehr">
+        <div class="d-flex align-items-center">
+          Mehr laden
+          <mat-spinner [diameter]="20" class="ml-2" *ngIf="runsLoading"></mat-spinner>
+        </div>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+
+<footer>
+  <div class="social-media">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex flex-column flex-lg-row">
+            <h2 class="mb-3 mt-0">DU FINDEST MICH AUCH AUF</h2>
+
+            <div class="d-flex flex-column">
+              <a href="https://www.facebook.com/PawlikNatalie/" class="mb-3">
+                <img src="./assets/images/facebook.svg" class="mr-3"/>
+                <span>Facebook</span>
+              </a>
+              <a href="https://www.instagram.com/natalie.pawlik/?hl=de">
+                <img src="./assets/images/instagram.svg"  class="mr-3" />
+                <span>Instagram</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-links">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex flex-wrap justify-content-between">
+            <a href="https://natalie-pawlik.spd.de/footer-navigation/kontakt/"> Kontakt </a>
+            <a href="https://www.spd.de/site/datenschutz/?pk_vid=a0556b3dd1f5890c1622708269d2c3e3"> Datenschutz </a>
+            <a href="https://natalie-pawlik.spd.de/footer-navigation/impressum/"> Impressum </a>
+            <a href="https://www.spd.de/"> Zurück zu SPD.de </a>
+            <span>Copyright 2021 SPD</span>
+          </div> 
+        </div>
+      </div> 
+    </div>
+  </div>
+</footer>
 
 <mat-spinner [diameter]="50" class="page-loading-spinner" *ngIf="!pageLoaded"></mat-spinner>
 
 <ng-template #runItem let-runsx="runsx">
-  <div class="run-item py-2 py-sm-3 " *ngFor="let run of runsx">
-    <div class="run-item__name px-2 px-sm-3 mb-2">
+  <div class="run-item py-2 py-md-3 " *ngFor="let run of runsx">
+    <div class="run-item__name px-2 px-md-3 mb-2">
       {{ run.vorname }}
       {{ run.name }}
     </div>
     <mat-divider></mat-divider>
-    <div class="run-item__km px-2 px-sm-3">{{ run.km }}km</div>
-    <div class="run-item__datum px-2  px-sm-3">{{ run.datum}}, {{ run.ort }}</div>
+    <div class="run-item__km px-2 px-md-3">{{ run.km }}km</div>
+    <div class="run-item__datum px-2  px-md-3">{{ run.datum}}, {{ run.ort }}</div>
   </div>
 </ng-template>
