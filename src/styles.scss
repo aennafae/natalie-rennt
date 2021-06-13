@@ -15,3 +15,8 @@ body {
 .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
   background-color: $main-color;
 }
+
+p {
+  margin-top: 0;
+  font-size: 13px;
+}

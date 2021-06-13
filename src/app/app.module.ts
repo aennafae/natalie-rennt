@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { DatePipe, registerLocaleData } from '@angular/common';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -32,13 +32,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.firebase';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 
 registerLocaleData(localeDe, localeDeExtra);
 
 @NgModule({
-  declarations: [AppComponent, DialogComponent],
+  declarations: [AppComponent, DialogComponent, InfoDialogComponent],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,

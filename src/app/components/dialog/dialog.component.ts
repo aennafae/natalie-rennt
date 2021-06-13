@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Run } from '../../models/models';
 import { RunService } from '../../services/run.service';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-dialog',
@@ -21,7 +22,7 @@ export class DialogComponent {
       Validators.max(42),
     ]),
     ort: new FormControl(''),
-    werbung: new FormControl({ disabled: false, value: false }),
+    werbung: new FormControl({ disabled: false, value: false }, [Validators.requiredTrue]),
     email: new FormControl('', [Validators.email]),
   });
 
@@ -39,6 +40,7 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private runService: RunService,
     private datePipe: DatePipe
@@ -67,6 +69,10 @@ export class DialogComponent {
       //picture: this.pictureBasepath,
       this.runService.addRun(newRun);
       this.dialogRef.close();
+      // Open info dialog, after successfull saving the run
+      this.dialog.open(InfoDialogComponent, {
+        width: '500px',
+      });
     } else {
     }
   }

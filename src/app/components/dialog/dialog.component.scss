@@ -1,0 +1,28 @@
+@import "../../../variables";
+
+::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+  display: flex !important;
+  align-items: normal !important;
+
+  .mat-checkbox-label  {
+    font-size: 13px;
+    line-height: 1;
+  }
+}
+
+::ng-deep .mat-checkbox-inner-container {
+  margin: 0px 8px 0 0 !important;
+}
+
+::ng-deep mat-checkbox.ng-invalid.ng-touched {
+  color: $main-color;
+
+  .mat-checkbox-frame {
+    border-color: $main-color;
+  }
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: black;
+}

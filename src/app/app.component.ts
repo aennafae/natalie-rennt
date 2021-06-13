@@ -54,13 +54,6 @@ export class AppComponent implements OnInit {
     this.dialog.open(DialogComponent, {
       width: '500px',
     });
-    /*let dialogRef = this.dialog.open(DialogComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getFirstRuns();
-    });*/
   }
 
   private getAllRuns(): void {
