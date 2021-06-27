@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <div class="row mb-3">
+    <!-- <div class="row mb-3">
       <div class="col">
         <mat-form-field class="w-100">
           <input
@@ -89,7 +89,7 @@
             maxlength="50"/>
             </mat-form-field>
       </div>
-    </div>
+    </div> -->
 
     <!-- <div class="w-100 my-3">
       <input
@@ -114,7 +114,11 @@
         >Lade ein Bild hoch</mat-error
       > 
     </div>-->
-    <mat-checkbox formControlName="werbung" class="mb-3">Ich bin damit einverstanden</mat-checkbox>
+    <div class="row mb-3">
+      <div class="col">
+        <mat-checkbox formControlName="werbung" class="mb-3">Ich bin damit einverstanden, dass meine eingegebenen Daten angezeigt und zu diesem Zwecke gespeichert werden.*</mat-checkbox>
+      </div>
+    </div>
   </form>
 
  <p class="mat-small">* Pflichtfeld</p>

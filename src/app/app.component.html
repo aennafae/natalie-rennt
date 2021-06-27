@@ -1,24 +1,36 @@
 <div class="app-container" [ngClass]="pageLoaded ? 'visible' : ''">
-  <div class="container"  *ngIf="pageLoaded">
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <h1>Natalie läuft bis nach Berlin!</h1>
-        <h2>
-          Unterstütze Sie und laufe mit! Dein Lauf mit deiner
-          KM-Zahl hoch.
-        </h2>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="championlist-wrapper">
-          <h2 class="text-center">HIGHSCORE</h2>
-          <div class="championlist mb-2" *ngFor="let champion of championlist;let i=index">
-            <div class="p-1 d-flex flex-direction-coloumn align-items-center" >
-              <div class="championlist__place mr-3">{{i+1}}</div>
-              <div class="championlist__name">{{champion.name}} {{champion.vorname}}</div>
-              <div class="championlist__km ml-auto mr-3">{{champion.km}}<span>km</span></div>
-            </div>
+  <div class="container" *ngIf="pageLoaded">
+
+    <div class="championlist-container position-fixed">
+      <button mat-fab aria-label="Zeige Highscore" class="championlist-button">
+        <img src="./assets/images/trophy.svg" width="27px" (click)="toggleChampionlist()"/>
+      </button>
+
+      <div class="championlist-list-wrapper" *ngIf="!championListHidden">
+        <div class="championlist mb-2" *ngFor="let champion of championlist;let i=index">
+          <div class="p-1 d-flex flex-direction-coloumn align-items-center" >
+            <div class="championlist__place mr-3">{{i+1}}</div>
+            <div class="championlist__name">{{champion.name}} {{champion.vorname}}</div>
+            <div class="championlist__km ml-auto mr-3">{{champion.km}}<span>km</span></div>
           </div>
         </div>
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>#LaufmitNatalie in den Bundestag!</h1>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-6">
+        <p>Zusammen mit Euch will ich in den kommenden Wochen mindestens 515 Kilometer, die Strecke von meiner Heimatstadt Bad Nauheim bis zum Bundestag nach Berlin laufen. Lasst uns die Kilometer zusammen sammeln. Egal ob laufen, walken oder einfach nur spazieren, jede und jeder kann mitmachen. </p>
+        <p>Und so funktioniert es: Trage auf meiner Seite Deinen Namen, Wohnort und Deine gelaufene Strecke ein und schon werden die Kilometer im System gesammelt. Teile im Anschluss auch ein Foto von Dir bei dem Lauf/Walk/Spaziergang oder von Deiner Strecke in den sozialen Medien und verlinke mich und das Hashtag #LaufmitNatalie. Gerne kannst Du auch Deinen Familienmitgliedern, Freunden und Bekannten von der Aktion erzählen und sie motivieren mitzumachen.</p>        
+         <p>Sportliche Grüße<br/>
+          Deine Natalie
+        </p>
+      </div>
+      <div class="col-md-3">
+        <img src="./assets/natalie.jpg" class="natalie-img" alt="Natalie läuft"/>
       </div>
     </div>
 
@@ -39,7 +51,7 @@
           <mat-spinner [diameter]="40" *ngIf="!kilometer"></mat-spinner>
           <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
           <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
-          <div class="km-current__days mt-3">100 Tage verbleiben</div>
+          <div class="km-current__days mt-3">{{daysLeft}} Tage verbleiben</div>
       </div>
     </div>
 
@@ -63,7 +75,7 @@
         </div>
       </div>
 
-      <div class="col-12 text-center my-4" *ngIf="showLoadMoreButton">
+      <div class="col-12 text-center mt-4" *ngIf="showLoadMoreButton">
         <button id="load-more-runs-button"
         mat-raised-button	
         (click)="showMoreRuns()"
@@ -109,8 +121,7 @@
             <a href="https://natalie-pawlik.spd.de/footer-navigation/kontakt/"> Kontakt </a>
             <a href="https://www.spd.de/site/datenschutz/?pk_vid=a0556b3dd1f5890c1622708269d2c3e3"> Datenschutz </a>
             <a href="https://natalie-pawlik.spd.de/footer-navigation/impressum/"> Impressum </a>
-            <a href="https://www.spd.de/"> Zurück zu SPD.de </a>
-            <span>Copyright 2021 SPD</span>
+            <a href="https://natalie-pawlik.spd.de/"> Über mich </a>
           </div> 
         </div>
       </div> 

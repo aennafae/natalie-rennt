@@ -39,11 +39,17 @@ export class AppComponent implements OnInit {
   // Rotation of gauge showing how many km are done
   kmRotation = 0;
 
+  // days left until the 26.09.2021 
+  daysLeft: number;
+
+  championListHidden = true;
+
   constructor(public dialog: MatDialog,
     private runService: RunService,
     private scoreService: ScoreService) {
     this.getAllRuns();
     this.getChampions();
+    this.daysLeft = this.getDaysLeft();
   }
 
   ngOnInit() {
@@ -54,13 +60,6 @@ export class AppComponent implements OnInit {
     this.dialog.open(DialogComponent, {
       width: '500px',
     });
-    /*let dialogRef = this.dialog.open(DialogComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getFirstRuns();
-    });*/
   }
 
   private getAllRuns(): void {
@@ -189,6 +188,11 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+  toggleChampionlist() {
+    this.championListHidden = !this.championListHidden;
+  }
+
   private scrollToBottom(): void {
     document.getElementById('load-more-runs-button')?.scrollIntoView({ behavior: 'smooth' });
   }
@@ -202,5 +206,14 @@ export class AppComponent implements OnInit {
     _.sortBy(runs, ['timestamp']);
     runs.reverse();
     return _.filter(runs, _.matches({ isPublic: true }));;
+  }
+
+  private getDaysLeft(): number {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    //javascript's Date months start with 0, so 9 is a 10th month and it is October
+    const endDate = new Date(2021, 8, 26).getTime();
+    const today = new Date().getTime();
+
+    return Math.round(Math.abs((endDate - today) / oneDay));
   }
 }
