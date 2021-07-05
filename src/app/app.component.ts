@@ -16,13 +16,18 @@ export class AppComponent implements OnInit {
   title = 'natalie-rennt';
   pageLoaded = false;
 
+  // current run kilometers
   kilometer: Promise<number> | undefined;
+
   championlist: Score[] | undefined;
   progressbarValue: number = 0;
   kilometerMax: number = 515;
   numberOfRunsToLoad: number = 12;
   numberOfRunsToLoadMore: number = 4;
   showLoadMoreButton: boolean = false;
+
+  // Current point to start in runs[] Array to count the km for gauge
+  startingPointOfRunCalculation = 42;
 
   runsFirst: Run[] = [];
   runsLeft: Run[] = [];
@@ -133,14 +138,16 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Adds all km from runs.
+   * Adds all km from runs, starting from a specific run, because the 515km are already reached.
    * Calculates Progressbar value to display. Progress value is 100% for 515km.
    * @param runs
    */
   private calculateKilometer(runs: Run[]): Promise<number> {
+    const remainingRuns = runs.slice(this.startingPointOfRunCalculation);
+    
     return new Promise((resolve) => {
       let kilometer = 0;
-      for (const run of runs) {
+      for (const run of remainingRuns) {
         if (run.km) {
           kilometer += run.km;
         }

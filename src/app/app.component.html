@@ -52,6 +52,9 @@
           <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
           <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
           <div class="km-current__days mt-3">{{daysLeft}} Tage verbleiben</div>
+        </div>
+
+        <img src="./assets/images/stempel-run.png" alt="Stempel bis nach Berlin gelaufen" class="stamp"/>
       </div>
     </div>
 
@@ -90,7 +93,7 @@
   </div>
 </div>
 
-<footer>
+<footer class="app-container" [ngClass]="pageLoaded ? 'visible' : ''">
   <div class="social-media">
     <div class="container">
       <div class="row">
