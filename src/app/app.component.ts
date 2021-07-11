@@ -143,11 +143,11 @@ export class AppComponent implements OnInit {
    * @param runs
    */
   private calculateKilometer(runs: Run[]): Promise<number> {
-    const remainingRuns = runs.slice(this.startingPointOfRunCalculation);
+    runs.splice(runs.length - this.startingPointOfRunCalculation);
     
     return new Promise((resolve) => {
       let kilometer = 0;
-      for (const run of remainingRuns) {
+      for (const run of runs) {
         if (run.km) {
           kilometer += run.km;
         }
