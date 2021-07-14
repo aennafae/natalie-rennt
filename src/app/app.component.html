@@ -10,7 +10,7 @@
         <div class="championlist mb-2" *ngFor="let champion of championlist;let i=index">
           <div class="p-1 d-flex flex-direction-coloumn align-items-center" >
             <div class="championlist__place mr-3">{{i+1}}</div>
-            <div class="championlist__name">{{champion.name}} {{champion.vorname}}</div>
+            <div class="championlist__name">{{champion.vorname}} {{champion.name}}</div>
             <div class="championlist__km ml-auto mr-3">{{champion.km}}<span>km</span></div>
           </div>
         </div>
@@ -52,6 +52,9 @@
           <div class="km-current__now position-absolute">{{ kilometer | async}}km</div>  
           <div class="km-current__left position-absolute">{{ kilometerMax }}km</div>
           <div class="km-current__days mt-3">{{daysLeft}} Tage verbleiben</div>
+        </div>
+
+        <img src="./assets/images/stempel-run.png" alt="Stempel bis nach Berlin gelaufen" class="stamp"/>
       </div>
     </div>
 
@@ -90,7 +93,7 @@
   </div>
 </div>
 
-<footer>
+<footer class="app-container" [ngClass]="pageLoaded ? 'visible' : ''">
   <div class="social-media">
     <div class="container">
       <div class="row">

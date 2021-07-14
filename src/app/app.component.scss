@@ -170,6 +170,13 @@
   }
 }
 
+// Stamp with date
+.stamp {
+    width: 175px;
+    height: auto;
+    transform: rotate(15deg);
+}
+
 .dialog-button {
   font-size: 40px;
   background-color: $main-color;
@@ -292,10 +299,16 @@
 }
 
 @media (min-width: 768px) {
+  .stamp {
+    position: absolute;
+    width: 220px;
+    right: 0;
+    top: 0;
+  }
+
   .map-container {
     margin: 0;
   }
-
   
   .runs-container {
     margin-top: 30px;
@@ -354,6 +367,11 @@
 }
 
 @media (min-width: 992px) {
+  .stamp {
+    right: 10%;
+    top: 30px;
+  }
+
   .social-media {
     h2 {
       width: 50%;
