@@ -174,7 +174,14 @@
 .stamp {
     width: 175px;
     height: auto;
-    transform: rotate(15deg);
+
+    &-1 {
+      transform: rotate(15deg);
+    }
+
+    &-2 {
+      transform: rotate(-15deg);
+    }
 }
 
 .dialog-button {
@@ -302,8 +309,15 @@
   .stamp {
     position: absolute;
     width: 220px;
-    right: 0;
     top: 0;
+
+    &-1 {
+      left: -25px;
+    }
+
+    &-2 {
+      right: -25px;
+    }
   }
 
   .map-container {
@@ -311,7 +325,6 @@
   }
   
   .runs-container {
-    margin-top: 30px;
     gap: 30px 30px;
   }
 
@@ -368,8 +381,14 @@
 
 @media (min-width: 992px) {
   .stamp {
-    right: 10%;
     top: 30px;
+
+    &-1 {
+      left: 10%;
+    }
+    &-2 {
+      right: 10%;
+    }
   }
 
   .social-media {
