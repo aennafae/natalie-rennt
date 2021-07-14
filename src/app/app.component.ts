@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   showLoadMoreButton: boolean = false;
 
   // Current point to start in runs[] Array to count the km for gauge
-  startingPointOfRunCalculation = 42;
+  startingPointOfRunCalculation = 88;
 
   runsFirst: Run[] = [];
   runsLeft: Run[] = [];
@@ -143,11 +143,12 @@ export class AppComponent implements OnInit {
    * @param runs
    */
   private calculateKilometer(runs: Run[]): Promise<number> {
-    runs.splice(runs.length - this.startingPointOfRunCalculation);
-    
+    const allRuns = _.cloneDeep(runs);
+    allRuns.splice(runs.length - this.startingPointOfRunCalculation);
+
     return new Promise((resolve) => {
       let kilometer = 0;
-      for (const run of runs) {
+      for (const run of allRuns) {
         if (run.km) {
           kilometer += run.km;
         }
@@ -191,7 +192,7 @@ export class AppComponent implements OnInit {
       }
       setTimeout(() => {
         this.scrollToBottom();
-      }, 100)
+      }, 300)
     });
   }
 

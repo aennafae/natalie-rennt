@@ -54,12 +54,15 @@
           <div class="km-current__days mt-3">{{daysLeft}} Tage verbleiben</div>
         </div>
 
-        <img src="./assets/images/stempel-run.png" alt="Stempel bis nach Berlin gelaufen" class="stamp"/>
+        <div class="d-flex">
+          <img src="./assets/images/stempel-run.png" alt="Stempel bis nach Berlin gelaufen" class="stamp stamp-1"/>
+          <img src="./assets/images/stempel-run2.png" alt="Stempel bis nach Berlin zum zweiten Mal gelaufen" class="stamp stamp-2"/>
+        </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-3 left-runs d-flex flex-wrap  d-md-block" *ngIf="runsFirst">
+      <div class="col-md-3 left-runs d-flex flex-wrap d-md-block" *ngIf="runsFirst">
         <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsLeft}"></ng-container> 
       </div>
 
@@ -74,7 +77,7 @@
 
       <div class="col-12 bottom-runs" *ngIf="runsFirst">
         <div class="d-flex flex-wrap mx-md-5 runs-container">
-          <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom}"></ng-container> 
+          <ng-container *ngTemplateOutlet="runItem;context:{runsx: runsBottom, margin: '30px'}"></ng-container> 
         </div>
       </div>
 
@@ -134,8 +137,8 @@
 
 <mat-spinner [diameter]="50" class="page-loading-spinner" *ngIf="!pageLoaded"></mat-spinner>
 
-<ng-template #runItem let-runsx="runsx">
-  <div class="run-item py-2 py-md-3 " *ngFor="let run of runsx">
+<ng-template #runItem let-runsx="runsx" let-margin="margin">
+  <div class="run-item py-2 py-md-3" *ngFor="let run of runsx" [ngStyle]="{'margin-top': margin}">
     <div class="run-item__name px-2 px-md-3 mb-2">
       {{ run.vorname }}
       {{ run.name }}
