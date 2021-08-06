@@ -323,6 +323,12 @@
       right: 0;
       top: -109px;
     }
+
+    &-4 {
+      top: -240px;
+      right: 0;
+      transform: rotate(9deg)
+    }
   }
 
   .map-container {
@@ -399,6 +405,11 @@
       right: 70px;
       top: -100px;
     }
+    &-4 {
+      left: -35px;
+      top: -100px;
+      transform: none;
+    }
   }
 
   .social-media {
@@ -420,6 +431,10 @@
   }
 
   .stamp {
+    &-1 {
+      left: 16%;
+    }
+
     &-2 {
       right: 16%;
     }
@@ -427,6 +442,11 @@
     &-3 {
       top: -22px;
       right: -14px;
+    }
+
+    &-4 {
+      left: -14px;
+      top: -22px; 
     }
   }
 }
