@@ -172,7 +172,7 @@
 
 // Stamp with date
 .stamp {
-    width: 175px;
+    width: 50%;
     height: auto;
 
     &-1 {
@@ -318,6 +318,17 @@
     &-2 {
       right: -25px;
     }
+
+    &-3 {
+      right: 0;
+      top: -109px;
+    }
+
+    &-4 {
+      top: -240px;
+      right: 0;
+      transform: rotate(9deg)
+    }
   }
 
   .map-container {
@@ -389,6 +400,16 @@
     &-2 {
       right: 10%;
     }
+
+    &-3 {
+      right: 70px;
+      top: -100px;
+    }
+    &-4 {
+      left: -35px;
+      top: -100px;
+      transform: none;
+    }
   }
 
   .social-media {
@@ -406,6 +427,26 @@
   .championlist-wrapper {
     h2 {
       font-size: 42px;
+    }
+  }
+
+  .stamp {
+    &-1 {
+      left: 16%;
+    }
+
+    &-2 {
+      right: 16%;
+    }
+
+    &-3 {
+      top: -22px;
+      right: -14px;
+    }
+
+    &-4 {
+      left: -14px;
+      top: -22px; 
     }
   }
 }
