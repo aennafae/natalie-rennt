@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   showLoadMoreButton: boolean = false;
 
   // Current point to start in runs[] Array to count the km for gauge
-  startingPointOfRunCalculation = 169;
+  startingPointOfRunCalculation = 250;
 
   runsFirst: Run[] = [];
   runsLeft: Run[] = [];

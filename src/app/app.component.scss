@@ -172,7 +172,7 @@
 
 // Stamp with date
 .stamp {
-    width: 50%;
+    width: 33%;
     height: auto;
 
     &-1 {
@@ -308,7 +308,7 @@
 @media (min-width: 768px) {
   .stamp {
     position: absolute;
-    width: 220px;
+    width: 180px;
     top: 0;
 
     &-1 {
@@ -328,6 +328,14 @@
       top: -240px;
       right: 0;
       transform: rotate(9deg)
+    }
+
+    &-5 {
+      top: -92px;
+      left: -42px;
+    }
+    &-6 {
+      top: 100px;
     }
   }
 
@@ -406,9 +414,16 @@
       top: -100px;
     }
     &-4 {
-      left: -35px;
+      left: 0;
       top: -100px;
       transform: none;
+    }
+    &-5 {
+      top: 90px;
+    }
+    &-6 {
+      top: 90px;
+      right: 0;
     }
   }
 
